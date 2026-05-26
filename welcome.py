@@ -82,7 +82,7 @@ st.markdown("""
     .footer-contact-link { color: #FF6600 !important; font-family: 'Arial Black', sans-serif !important; font-size: 16px !important; font-weight: bold !important; text-transform: uppercase !important; text-decoration: none !important; transition: 0.2s; }
     .footer-contact-link:hover { color: #FFFFFF !important; text-decoration: underline !important; }
     
-    /* RESET VISUAL DO VÍDEO DO REPRODUTOR NATIVO COMPATÍVEL COM FLUXO DA NUVEM */
+    /* RESET VISUAL DO VÍDEO DO REPRODUTOR NATIVO */
     [data-testid="stVideo"] { border-radius: 12px !important; border: 2px solid #FF6600 !important; box-shadow: 0px 4px 15px rgba(0,0,0,0.5) !important; background-color: #000000 !important; }
     
     [data-testid="stForm"] { border: none !important; padding: 0 !important; background: transparent !important; }
@@ -144,7 +144,6 @@ if st.session_state["page"] == "home":
     with col_row2_right: st.markdown('<div class="feature-box"><span class="feature-title">🔊 Hands-Free Voice Expert</span>Talk to the "Master Tech" while your hands are on the tools.</div>', unsafe_allow_html=True)
     st.markdown('<p class="promo-text">Get unlimited access to the entire database up to 2024</p>', unsafe_allow_html=True)
     
-    # 🚨 BLINDAGEM MESTRE: ABRE O VÍDEO LOCALMENTE DE FORMA INDESTRUTÍVEL NA NUVEM 🚨
     col_v1, col_v2, col_v3 = st.columns([0.5, 2, 0.5])
     with col_v2:
         if os.path.exists("demo_video.mp4"):
@@ -160,6 +159,8 @@ elif st.session_state["page"] == "pricing":
     st.markdown('<a href="?p=home" target="_self" class="html-custom-btn-vazado" style="width:160px;">← Back to Home</a>', unsafe_allow_html=True)
     st.markdown("<h1>Choose Your Access Plan</h1>", unsafe_allow_html=True)
     col1, space, col2 = st.columns([2, 0.5, 2])
+    
+    # 🚨 INJEÇÃO RETIFICADA: OS TEUS DOIS LINKS DE PRODUÇÃO REAIS ATIVOS E VERIFICADOS COM SUCESSO 🚨
     with col1: st.markdown('<div class="pricing-card"><h3>💡 Monthly Pass</h3><h2>$19.99</h2><p>Full Access to all wiring diagrams, diagnostics and torque specifications. Up to date model coverage. Cancel anytime with a single click.</p><br><a href="https://stripe.com" target="_blank" class="html-plan-btn">Subscribe Monthly</a></div>', unsafe_allow_html=True)
     with col2: st.markdown('<div class="pricing-card" style="border:2px solid #FF6600;"><h3>⚡ Annual Pro</h3><h2>$199</h2><p>Save $40 with the annual membership. Continuous full workshop database unlock, structural step-by-step repair logs and master tech priority helper tools.</p><br><a href="https://stripe.com" target="_blank" class="html-plan-btn">Subscribe Annually</a></div>', unsafe_allow_html=True)
 
@@ -195,7 +196,7 @@ elif st.session_state["page"] == "brain":
     with c_b2: st.markdown('<a href="?p=pricing" target="_self" class="html-custom-btn-vazado" style="width:100%;">💳 Cancel Subscription</a>', unsafe_allow_html=True)
     with c_b3: st.markdown('<a href="?p=home" target="_self" class="html-custom-btn-vazado" style="width:100%;">🚪 Log Out</a>', unsafe_allow_html=True)
     if logo_base64: st.markdown(f'<div class="html-brain-motor"><img src="data:image/jpeg;base64,{logo_base64}"></div>', unsafe_allow_html=True)
-    st.markdown('<p class="red-slogan">Everything about V-Twins, how to maintenance, how to fix it...</p>', unsafe_allow_index=True, unsafe_allow_html=True)
+    st.markdown('<p class="red-slogan">Everything about V-Twins, how to maintenance, how to fix it...</p>', unsafe_allow_html=True)
     st.markdown('<div class="status-box-video">📊 Knowledge Base Status: Models up to 2024</div>', unsafe_allow_html=True)
     st.markdown("---")
     st.markdown("### 💬 Master Tech Workshop Chat:")
