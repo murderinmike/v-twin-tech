@@ -44,7 +44,7 @@ def carregar_sistema_ia():
         Answer professionally based on the context and history:""")
         return llm, retriever, p
     except: return None
-# 2. DESIGN VISUAL INDESTRUTÍVEL PREMIUM (CSS REFORÇADO E ISOLADO)
+# 2. DESIGN VISUAL INDESTRUTÍVEL PREMIUM (CSS TOTALMENTE ISOLADO PARA PLANOS E ENTRADAS)
 st.markdown("""
     <style>
     [data-testid="stSidebar"], [data-testid="stSidebarCollapsedControl"], [data-testid="stSidebarNav"] { display: none !important; }
@@ -57,7 +57,6 @@ st.markdown("""
     .feature-box { background-color: #262626; padding: 20px; border-radius: 10px; border-left: 5px solid #FF6600; margin-bottom: 20px; min-height: 140px; font-size: 16px; color: #DDDDDD; font-family: sans-serif; }
     .feature-title { color: #FF6600; font-weight: bold; font-size: 18px; text-transform: uppercase; display: block; margin-bottom: 8px; }
     
-    /* CARTÕES DOS PLANOS */
     .pricing-card { background-color: #262626; padding: 35px 25px; border-radius: 15px; text-align: center; border: 1px solid #333333; margin-bottom: 25px; min-height: 340px; }
     .pricing-card h3 { color: #FF6600 !important; font-family: 'Arial Black'; font-size: 24px; text-transform: uppercase; margin-bottom: 10px; }
     .pricing-card h2 { font-size: 42px !important; margin-top: 10px; margin-bottom: 10px; color: #FFFFFF !important; }
@@ -79,7 +78,6 @@ st.markdown("""
     .stApp div[data-testid="stFormSubmitButton"] button { background-color: #FF6600 !important; border: none !important; height: 48px !important; width: 100% !important; border-radius: 8px !important; }
     .stApp div[data-testid="stFormSubmitButton"] button p { color: #FFFFFF !important; font-family: 'Arial Black', sans-serif !important; font-weight: bold !important; font-size: 16px !important; text-transform: uppercase !important; }
     
-    /* RODAPÉ DE CONTACTO */
     .footer-contact-box { text-align: center !important; margin-top: 50px; margin-bottom: 30px; padding: 20px; border-top: 1px solid #222; width: 100%; }
     .footer-contact-link { color: #FF6600 !important; font-family: 'Arial Black', sans-serif !important; font-size: 16px !important; font-weight: bold !important; text-transform: uppercase !important; text-decoration: none !important; transition: 0.2s; }
     .footer-contact-link:hover { color: #FFFFFF !important; text-decoration: underline !important; }
@@ -142,9 +140,12 @@ if st.session_state["page"] == "home":
     with col_row2_left: st.markdown('<div class="feature-box"><span class="feature-title">🔍 Advanced Diagnostics</span>Identify faults and error codes with our specialized AI.</div>', unsafe_allow_html=True)
     with col_row2_right: st.markdown('<div class="feature-box"><span class="feature-title">🔊 Hands-Free Voice Expert</span>Talk to the "Master Tech" while your hands are on the tools.</div>', unsafe_allow_html=True)
     st.markdown('<p class="promo-text">Get unlimited access to the entire database up to 2024</p>', unsafe_allow_html=True)
+    
+    # 🚨 ATUALIZADO: O vídeo agora carrega direto da nuvem via YouTube (Substitui pelo teu link real quando quiseres) 🚨
     col_v1, col_v2, col_v3 = st.columns([0.5, 2, 0.5])
     with col_v2:
-        if os.path.exists("videos/demo_video.mp4"): st.video(open("videos/demo_video.mp4", "rb").read())
+        st.video("https://youtube.com")
+        
     st.markdown("""<div class="main-btn-container"><a href="?p=pricing" target="_self" class="html-giant-btn">BUY INSTANT ACCESS — CHECK PRICING</a></div>""", unsafe_allow_html=True)
     st.markdown("""<div class="footer-contact-box"><a href="mailto:support@vtwintechai.com" class="footer-contact-link">📩 Need Help? Contact Us: support@vtwintechai.com</a></div>""", unsafe_allow_html=True)
 
@@ -152,12 +153,8 @@ elif st.session_state["page"] == "pricing":
     st.markdown('<a href="?p=home" target="_self" class="html-custom-btn-vazado" style="width:160px;">← Back to Home</a>', unsafe_allow_html=True)
     st.markdown("<h1>Choose Your Access Plan</h1>", unsafe_allow_html=True)
     col1, space, col2 = st.columns([2, 0.5, 2])
-    
-    # 🚨 CONFERIDO AO MILÍMETRO: LINKS REAIS DO TEU BLOCO DE NOTAS INJETADOS COM SUCESSO 🚨
-    with col1: 
-        st.markdown('<div class="pricing-card"><h3>💡 Monthly Pass</h3><h2>$19.99</h2><p>Full Access to all wiring diagrams, diagnostics and torque specifications. Up to date model coverage. Cancel anytime with a single click.</p><br><a href="https://stripe.com" target="_blank" class="html-plan-btn">Subscribe Monthly</a></div>', unsafe_allow_html=True)
-    with col2: 
-        st.markdown('<div class="pricing-card" style="border:2px solid #FF6600;"><h3>⚡ Annual Pro</h3><h2>$199</h2><p>Save $40 with the annual membership. Continuous full workshop database unlock, structural step-by-step repair logs and master tech priority helper tools.</p><br><a href="https://stripe.com" target="_blank" class="html-plan-btn">Subscribe Annually</a></div>', unsafe_allow_html=True)
+    with col1: st.markdown('<div class="pricing-card"><h3>💡 Monthly Pass</h3><h2>$19.99</h2><p>Full Access to all wiring diagrams, diagnostics and torque specifications. Up to date model coverage. Cancel anytime with a single click.</p><br><a href="https://stripe.com" target="_blank" class="html-plan-btn">Subscribe Monthly</a></div>', unsafe_allow_html=True)
+    with col2: st.markdown('<div class="pricing-card" style="border:2px solid #FF6600;"><h3>⚡ Annual Pro</h3><h2>$199</h2><p>Save $40 with the annual membership. Continuous full workshop database unlock, structural step-by-step repair logs and master tech priority helper tools.</p><br><a href="https://stripe.com" target="_blank" class="html-plan-btn">Subscribe Annually</a></div>', unsafe_allow_html=True)
 
 elif st.session_state["page"] == "login":
     st.markdown('<a href="?p=home" target="_self" class="html-custom-btn-vazado" style="width:160px;">← Back to Home</a>', unsafe_allow_html=True)
