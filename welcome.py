@@ -82,9 +82,8 @@ st.markdown("""
     .footer-contact-link { color: #FF6600 !important; font-family: 'Arial Black', sans-serif !important; font-size: 16px !important; font-weight: bold !important; text-transform: uppercase !important; text-decoration: none !important; transition: 0.2s; }
     .footer-contact-link:hover { color: #FFFFFF !important; text-decoration: underline !important; }
     
-    /* REPRODUTOR DE VÍDEO HTML5 100% INTEGRADO CONTRA BLOQUEIOS */
-    .video-container-html5 { display: flex; justify-content: center; align-items: center; width: 100%; margin-top: 10px; margin-bottom: 25px; }
-    .video-container-html5 video { width: 100% !important; max-width: 800px; height: 450px; border-radius: 12px; border: 2px solid #FF6600; box-shadow: 0px 4px 15px rgba(0,0,0,0.5); background-color: #000000; }
+    /* RESET VISUAL DO VÍDEO DO REPRODUTOR NATIVO COMPATÍVEL COM FLUXO DA NUVEM */
+    [data-testid="stVideo"] { border-radius: 12px !important; border: 2px solid #FF6600 !important; box-shadow: 0px 4px 15px rgba(0,0,0,0.5) !important; background-color: #000000 !important; }
     
     [data-testid="stForm"] { border: none !important; padding: 0 !important; background: transparent !important; }
     .main-btn-container { display: flex; justify-content: center; align-items: center; width: 100%; margin-top: 20px; margin-bottom: 60px; }
@@ -145,17 +144,14 @@ if st.session_state["page"] == "home":
     with col_row2_right: st.markdown('<div class="feature-box"><span class="feature-title">🔊 Hands-Free Voice Expert</span>Talk to the "Master Tech" while your hands are on the tools.</div>', unsafe_allow_html=True)
     st.markdown('<p class="promo-text">Get unlimited access to the entire database up to 2024</p>', unsafe_allow_html=True)
     
-    # TAG DE VÍDEO NATIVA QUE LE DO TEU GITHUB
+    # 🚨 BLINDAGEM MESTRE: ABRE O VÍDEO LOCALMENTE DE FORMA INDESTRUTÍVEL NA NUVEM 🚨
     col_v1, col_v2, col_v3 = st.columns([0.5, 2, 0.5])
     with col_v2:
-        st.markdown("""
-            <div class="video-container-html5">
-                <video controls preload="metadata">
-                    <source src="https://githubusercontent.com" type="video/mp4">
-                    Your browser does not support the video tag.
-                </video>
-            </div>
-            """, unsafe_allow_html=True)
+        if os.path.exists("demo_video.mp4"):
+            with open("demo_video.mp4", "rb") as v_file:
+                st.video(v_file.read(), format="video/mp4")
+        else:
+            st.markdown('<div style="text-align:center; color:#FF6600;">⚠️ Place your video file "demo_video.mp4" in the main project folder.</div>', unsafe_allow_html=True)
         
     st.markdown("""<div class="main-btn-container"><a href="?p=pricing" target="_self" class="html-giant-btn">BUY INSTANT ACCESS — CHECK PRICING</a></div>""", unsafe_allow_html=True)
     st.markdown("""<div class="footer-contact-box"><a href="mailto:support@vtwintechai.com" class="footer-contact-link">📩 Need Help? Contact Us: support@vtwintechai.com</a></div>""", unsafe_allow_html=True)
@@ -199,7 +195,7 @@ elif st.session_state["page"] == "brain":
     with c_b2: st.markdown('<a href="?p=pricing" target="_self" class="html-custom-btn-vazado" style="width:100%;">💳 Cancel Subscription</a>', unsafe_allow_html=True)
     with c_b3: st.markdown('<a href="?p=home" target="_self" class="html-custom-btn-vazado" style="width:100%;">🚪 Log Out</a>', unsafe_allow_html=True)
     if logo_base64: st.markdown(f'<div class="html-brain-motor"><img src="data:image/jpeg;base64,{logo_base64}"></div>', unsafe_allow_html=True)
-    st.markdown('<p class="red-slogan">Everything about V-Twins, how to maintenance, how to fix it...</p>', unsafe_allow_html=True)
+    st.markdown('<p class="red-slogan">Everything about V-Twins, how to maintenance, how to fix it...</p>', unsafe_allow_index=True, unsafe_allow_html=True)
     st.markdown('<div class="status-box-video">📊 Knowledge Base Status: Models up to 2024</div>', unsafe_allow_html=True)
     st.markdown("---")
     st.markdown("### 💬 Master Tech Workshop Chat:")
