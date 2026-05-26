@@ -144,14 +144,10 @@ if st.session_state["page"] == "home":
     with col_row2_right: st.markdown('<div class="feature-box"><span class="feature-title">🔊 Hands-Free Voice Expert</span>Talk to the "Master Tech" while your hands are on the tools.</div>', unsafe_allow_html=True)
     st.markdown('<p class="promo-text">Get unlimited access to the entire database up to 2024</p>', unsafe_allow_html=True)
     
-    # 🚨 INJETADO: LINK DO VÍDEO DA HARLEY AUTORIZADO DE FORMA EM DISPARO DIRETO 🚨
+    # 🚨 BLINDAGEM DE EMBED: SISTEMA HTML COMPATÍVEL COM STRIP INTERNACIONAL DE INCORPORAÇÃO 🚨
     col_v1, col_v2, col_v3 = st.columns([0.5, 2, 0.5])
     with col_v2:
-        st.markdown("""
-            <div class="video-container-html5">
-                <iframe width="100%" height="450" src="https://youtube.com" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="border-radius:12px; border:2px solid #FF6600;"></iframe>
-            </div>
-            """, unsafe_allow_html=True)
+        st.video("https://youtube.com")
         
     st.markdown("""<div class="main-btn-container"><a href="?p=pricing" target="_self" class="html-giant-btn">BUY INSTANT ACCESS — CHECK PRICING</a></div>""", unsafe_allow_html=True)
     st.markdown("""<div class="footer-contact-box"><a href="mailto:support@vtwintechai.com" class="footer-contact-link">📩 Need Help? Contact Us: support@vtwintechai.com</a></div>""", unsafe_allow_html=True)
