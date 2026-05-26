@@ -50,34 +50,28 @@ st.markdown("""
     [data-testid="stSidebar"], [data-testid="stSidebarCollapsedControl"], [data-testid="stSidebarNav"] { display: none !important; }
     .stApp { background-color: #121212; color: #FFFFFF; }
     
-    /* TÍTULOS RESPONSIVOS */
     h1 { color: #FF6600 !important; text-align: center; font-family: 'Arial Black'; font-size: calc(24px + 2vw) !important; text-transform: uppercase; margin-top: 10px; margin-bottom: 5px; }
     h2 { color: #FF6600 !important; text-align: center; font-family: 'Arial Black'; font-size: calc(18px + 1vw) !important; text-transform: uppercase; margin-top: 30px; margin-bottom: 20px; }
     .sub-title { color: #FF6600; text-align: center; font-size: calc(14px + 0.5vw); font-weight: bold; margin-top: 10px; margin-bottom: 30px; }
     .red-slogan { color: #FF2222 !important; text-align: center; font-size: 16px; font-weight: bold; font-family: 'Courier New', monospace; margin-top: 15px; margin-bottom: 15px; text-transform: uppercase; }
     
-    /* GRELHA ADAPTÁVEL PARA TELEMÓVEL */
     .feature-box { background-color: #262626; padding: 20px; border-radius: 10px; border-left: 5px solid #FF6600; margin-bottom: 15px; min-height: 120px; font-size: 15px; color: #DDDDDD; font-family: sans-serif; }
     .feature-title { color: #FF6600; font-weight: bold; font-size: 17px; text-transform: uppercase; display: block; margin-bottom: 8px; }
     
-    /* CARTÕES DE PREÇO LÍQUIDOS FLEXÍVEIS */
     .pricing-card { background-color: #262626; padding: 30px 20px; border-radius: 15px; text-align: center; border: 1px solid #333333; margin-bottom: 20px; width: 100%; box-sizing: border-box; }
     .pricing-card h3 { color: #FF6600 !important; font-family: 'Arial Black'; font-size: 22px; text-transform: uppercase; margin-bottom: 10px; }
     .pricing-card h2 { font-size: 38px !important; margin-top: 5px; margin-bottom: 10px; color: #FFFFFF !important; }
     .pricing-card p { color: #CCCCCC !important; font-size: 14px; line-height: 1.5; margin-bottom: 15px; font-family: sans-serif; }
     .promo-text { text-align: center !important; font-family: 'Arial Black'; font-size: calc(16px + 1vw) !important; color: #FF6600 !important; margin-top: 30px; margin-bottom: 25px; text-transform: uppercase; }
     
-    /* CHAT BUBBLES ADAPTÁVEIS */
     .chat-bubble-user { background-color: #262626 !important; border-right: 4px solid #FF6600 !important; padding: 12px; border-radius: 8px; margin-bottom: 10px; text-align: right; margin-left: 10%; color: #FFFFFF; font-family: sans-serif; }
     .chat-bubble-tech { background-color: #1E1E1E !important; border-left: 4px solid #FF6600 !important; padding: 15px; border-radius: 8px; margin-bottom: 15px; text-align: left; margin-right: 10%; color: #EEEEEE; font-family: sans-serif; line-height: 1.5; }
     
     .stTextInput > div > div > input { background-color: #121212 !important; color: white !important; border: 1px solid #666666 !important; height: 48px !important; }
     
-    /* ALINHAMENTO DO RODAPÉ */
     .footer-contact-box { text-align: center !important; margin-top: 40px; margin-bottom: 30px; padding: 20px; border-top: 1px solid #222; width: 100%; }
     .footer-contact-link { color: #FF6600 !important; font-family: 'Arial Black', sans-serif !important; font-size: 15px !important; font-weight: bold !important; text-transform: uppercase !important; text-decoration: none !important; }
     
-    /* AJUSTE NATIVO DOS BOTÕES DO STREAMLIT PARA ESTILO HARLEY */
     .stButton>button, .stDownloadButton>button { background-color: #FF6600 !important; color: white !important; font-family: 'Arial Black', sans-serif !important; text-transform: uppercase !important; width: 100% !important; height: 48px !important; border-radius: 8px !important; border: none !important; }
     .stButton>button:hover { background-color: #E05300 !important; color: white !important; }
     
@@ -118,7 +112,7 @@ def enviar_mensagem_chat():
             st.session_state["chat_history"].append({"role": "assistant", "content": resposta.content, "images": imagens_geradas})
 
 # ==========================================
-# RENDERIZAÇÃO DOS ECRÃS MESTRE
+# GESTÃO DE REDIRECIONAMENTOS DE PÁGINAS
 # ==========================================
 if st.session_state["page"] == "home":
     c_top1, c_top2, c_top3 = st.columns([2, 1, 0.6])
@@ -164,21 +158,20 @@ elif st.session_state["page"] == "pricing":
     
     col1, col2 = st.columns(2)
     
-    # 🚨 ESPAÇO PREPARADO: LIGAÇÃO DOS TEUS LINKS LIVE DE MODO DE PRODUÇÃO REAL DA STRIPE 🚨
     with col1: 
         st.markdown('<div class="pricing-card"><h3>💡 Monthly Pass</h3><h2>$19.99</h2><p>Full Access to all wiring diagrams, diagnostics and torque specifications. Up to date model coverage. Cancel anytime.</p></div>', unsafe_allow_html=True)
-        st.link_button("Subscribe Monthly", "COLA_AQUI_O_TEU_NOVO_LINK_MENSAL_LIVE", use_container_width=True)
+        st.link_button("Subscribe Monthly", "https://stripe.com", use_container_width=True)
         
     with col2: 
         st.markdown('<div class="pricing-card" style="border:2px solid #FF6600;"><h3>⚡ Annual Pro</h3><h2>$199</h2><p>Save $40 with the annual membership. Continuous full workshop database unlock, structural step-by-step repair logs and priority tools.</p></div>', unsafe_allow_html=True)
-        st.link_button("Subscribe Annually", "COLA_AQUI_O_TEU_NOVO_LINK_ANUAL_LIVE", use_container_width=True)
+        st.link_button("Subscribe Annually", "https://stripe.com", use_container_width=True)
 
 elif st.session_state["page"] == "login":
     if st.button("← Back to Home"):
         st.session_state["page"] = "home"
         st.rerun()
     st.markdown("<h1>Secure Member Portal</h1>", unsafe_allow_html=True)
-    cl1, cl2, cl3 = st.columns()
+    cl1, cl2, cl3 = st.columns([1, 2, 1])
     with cl2:
         u_email = st.text_input("Email Address", key="login_usr")
         u_pass = st.text_input("Password", type="password", key="login_pwd")
@@ -193,7 +186,7 @@ elif st.session_state["page"] == "register":
         st.session_state["page"] = "home"
         st.rerun()
     st.markdown("<h1>💳 Setup Your Premium Account</h1>", unsafe_allow_html=True)
-    cl1, cl2, cl3 = st.columns()
+    cl1, cl2, cl3 = st.columns([1, 2, 1])
     with cl2:
         n_email = st.text_input("Enter Your Account Email", key="reg_usr")
         n_pass = st.text_input("Create Secret Password", type="password", key="reg_pwd")
@@ -204,7 +197,7 @@ elif st.session_state["page"] == "register":
                 st.rerun()
 
 elif st.session_state["page"] == "brain":
-    c_b1, c_b2 = st.columns()
+    c_b1, c_b2 = st.columns([3, 1])
     with c_b2: 
         if st.button("🚪 Log Out", use_container_width=True):
             st.session_state["page"] = "home"
