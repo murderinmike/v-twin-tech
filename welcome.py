@@ -44,55 +44,48 @@ def carregar_sistema_ia():
         Answer professionally based on the context and history:""")
         return llm, retriever, p
     except: return None
-# 2. DESIGN VISUAL INDESTRUTÍVEL PREMIUM (CSS TOTALMENTE ISOLADO PARA PLANOS E ENTRADAS)
+# 2. DESIGN RESPONSIVO MOBILE-FIRST (CSS ADAPTÁVEL PARA COMPUTADOR E TELEMÓVEL)
 st.markdown("""
     <style>
     [data-testid="stSidebar"], [data-testid="stSidebarCollapsedControl"], [data-testid="stSidebarNav"] { display: none !important; }
     .stApp { background-color: #121212; color: #FFFFFF; }
-    h1 { color: #FF6600 !important; text-align: center; font-family: 'Arial Black'; font-size: 50px; text-transform: uppercase; margin-top: 10px; margin-bottom: 5px; }
-    h2 { color: #FF6600 !important; text-align: center; font-family: 'Arial Black'; font-size: 30px; text-transform: uppercase; margin-top: 30px; margin-bottom: 20px; }
-    .sub-title { color: #FF6600; text-align: center; font-size: 22px; font-weight: bold; margin-top: 10px; margin-bottom: 30px; }
-    .red-slogan { color: #FF2222 !important; text-align: center; font-size: 18px; font-weight: bold; font-family: 'Courier New', monospace; margin-top: 15px; margin-bottom: 15px; text-transform: uppercase; }
-    .status-box-video { background-color: #1E2511 !important; border: 1px solid #FF6600; padding: 10px; border-radius: 4px; color: #CC9900; font-size: 14px; width: 100%; margin-bottom: 25px; }
-    .feature-box { background-color: #262626; padding: 20px; border-radius: 10px; border-left: 5px solid #FF6600; margin-bottom: 20px; min-height: 140px; font-size: 16px; color: #DDDDDD; font-family: sans-serif; }
-    .feature-title { color: #FF6600; font-weight: bold; font-size: 18px; text-transform: uppercase; display: block; margin-bottom: 8px; }
     
-    .pricing-card { background-color: #262626; padding: 35px 25px; border-radius: 15px; text-align: center; border: 1px solid #333333; margin-bottom: 25px; min-height: 340px; }
-    .pricing-card h3 { color: #FF6600 !important; font-family: 'Arial Black'; font-size: 24px; text-transform: uppercase; margin-bottom: 10px; }
-    .pricing-card h2 { font-size: 42px !important; margin-top: 10px; margin-bottom: 10px; color: #FFFFFF !important; }
-    .pricing-card p { color: #CCCCCC !important; font-size: 15px; line-height: 1.6; margin-bottom: 20px; font-family: sans-serif; }
-    .promo-text { text-align: center !important; font-family: 'Arial Black'; font-size: 32px; color: #FF6600 !important; margin-top: 40px; margin-bottom: 25px; text-transform: uppercase; }
+    /* TÍTULOS RESPONSIVOS */
+    h1 { color: #FF6600 !important; text-align: center; font-family: 'Arial Black'; font-size: calc(24px + 2vw) !important; text-transform: uppercase; margin-top: 10px; margin-bottom: 5px; }
+    h2 { color: #FF6600 !important; text-align: center; font-family: 'Arial Black'; font-size: calc(18px + 1vw) !important; text-transform: uppercase; margin-top: 30px; margin-bottom: 20px; }
+    .sub-title { color: #FF6600; text-align: center; font-size: calc(14px + 0.5vw); font-weight: bold; margin-top: 10px; margin-bottom: 30px; }
+    .red-slogan { color: #FF2222 !important; text-align: center; font-size: 16px; font-weight: bold; font-family: 'Courier New', monospace; margin-top: 15px; margin-bottom: 15px; text-transform: uppercase; }
     
-    .chat-bubble-user { background-color: #262626 !important; border-right: 4px solid #FF6600 !important; padding: 12px; border-radius: 8px; margin-bottom: 10px; text-align: right; margin-left: 20%; color: #FFFFFF; font-family: sans-serif; }
-    .chat-bubble-tech { background-color: #1E1E1E !important; border-left: 4px solid #FF6600 !important; padding: 15px; border-radius: 8px; margin-bottom: 15px; text-align: left; margin-right: 20%; color: #EEEEEE; font-family: sans-serif; line-height: 1.5; }
+    /* GRELHA ADAPTÁVEL PARA FUNCIONAR EM TELEMÓVEL */
+    .feature-box { background-color: #262626; padding: 20px; border-radius: 10px; border-left: 5px solid #FF6600; margin-bottom: 15px; min-height: 120px; font-size: 15px; color: #DDDDDD; font-family: sans-serif; }
+    .feature-title { color: #FF6600; font-weight: bold; font-size: 17px; text-transform: uppercase; display: block; margin-bottom: 8px; }
+    
+    /* CARTÕES DE PREÇO LÍQUIDOS FLEXÍVEIS */
+    .pricing-card { background-color: #262626; padding: 30px 20px; border-radius: 15px; text-align: center; border: 1px solid #333333; margin-bottom: 20px; width: 100%; box-sizing: border-box; }
+    .pricing-card h3 { color: #FF6600 !important; font-family: 'Arial Black'; font-size: 22px; text-transform: uppercase; margin-bottom: 10px; }
+    .pricing-card h2 { font-size: 38px !important; margin-top: 5px; margin-bottom: 10px; color: #FFFFFF !important; }
+    .pricing-card p { color: #CCCCCC !important; font-size: 14px; line-height: 1.5; margin-bottom: 15px; font-family: sans-serif; }
+    .promo-text { text-align: center !important; font-family: 'Arial Black'; font-size: calc(16px + 1vw) !important; color: #FF6600 !important; margin-top: 30px; margin-bottom: 25px; text-transform: uppercase; }
+    
+    /* CHAT BUBBLES ADAPTÁVEIS */
+    .chat-bubble-user { background-color: #262626 !important; border-right: 4px solid #FF6600 !important; padding: 12px; border-radius: 8px; margin-bottom: 10px; text-align: right; margin-left: 10%; color: #FFFFFF; font-family: sans-serif; }
+    .chat-bubble-tech { background-color: #1E1E1E !important; border-left: 4px solid #FF6600 !important; padding: 15px; border-radius: 8px; margin-bottom: 15px; text-align: left; margin-right: 10%; color: #EEEEEE; font-family: sans-serif; line-height: 1.5; }
     
     .stTextInput > div > div > input { background-color: #121212 !important; color: white !important; border: 1px solid #666666 !important; height: 48px !important; }
-    .stTextInput button, [data-testid="stInputActionButton"] button { background-color: transparent !important; border: none !important; width: auto !important; height: auto !important; color: inherit !important; }
     
-    .html-custom-btn-solid { background-color: #FF6600 !important; color: #FFFFFF !important; font-size: 16px !important; font-family: 'Arial Black', sans-serif !important; font-weight: bold !important; height: 48px; width: 100%; border-radius: 8px; border: none; text-transform: uppercase; display: flex; justify-content: center; align-items: center; text-decoration: none; cursor: pointer; box-shadow: 0px 4px 10px rgba(0,0,0,0.3); transition: 0.2s; margin-top: 15px; }
-    .html-custom-btn-solid:hover { background-color: #E05300 !important; color: #FFFFFF !important; text-decoration: none; }
+    /* ALINHAMENTO DO RODAPÉ */
+    .footer-contact-box { text-align: center !important; margin-top: 40px; margin-bottom: 30px; padding: 20px; border-top: 1px solid #222; width: 100%; }
+    .footer-contact-link { color: #FF6600 !important; font-family: 'Arial Black', sans-serif !important; font-size: 15px !important; font-weight: bold !important; text-transform: uppercase !important; text-decoration: none !important; }
     
-    .html-custom-btn-vazado { background-color: transparent !important; color: #FF6600 !important; font-size: 14px !important; font-family: 'Arial Black', sans-serif !important; font-weight: bold !important; height: 42px; width: 180px; border-radius: 6px; border: 2px solid #FF6600; text-transform: uppercase; display: flex; justify-content: center; align-items: center; text-decoration: none; cursor: pointer; transition: 0.2s; }
-    .html-custom-btn-vazado:hover { background-color: #FF6600 !important; color: #121212 !important; text-decoration: none; }
+    /* AJUSTE NATIVO DOS BOTÕES DO STREAMLIT PARA ESTILO HARLEY */
+    .stButton>button, .stDownloadButton>button { background-color: #FF6600 !important; color: white !important; font-family: 'Arial Black', sans-serif !important; text-transform: uppercase !important; width: 100% !important; height: 48px !important; border-radius: 8px !important; border: none !important; }
+    .stButton>button:hover { background-color: #E05300 !important; color: white !important; }
     
-    .stApp div[data-testid="stFormSubmitButton"] button { background-color: #FF6600 !important; border: none !important; height: 48px !important; width: 100% !important; border-radius: 8px !important; }
-    .stApp div[data-testid="stFormSubmitButton"] button p { color: #FFFFFF !important; font-family: 'Arial Black', sans-serif !important; font-weight: bold !important; font-size: 16px !important; text-transform: uppercase !important; }
-    
-    .footer-contact-box { text-align: center !important; margin-top: 50px; margin-bottom: 30px; padding: 20px; border-top: 1px solid #222; width: 100%; }
-    .footer-contact-link { color: #FF6600 !important; font-family: 'Arial Black', sans-serif !important; font-size: 16px !important; font-weight: bold !important; text-transform: uppercase !important; text-decoration: none !important; transition: 0.2s; }
-    .footer-contact-link:hover { color: #FFFFFF !important; text-decoration: underline !important; }
-    
-    [data-testid="stVideo"] { border-radius: 12px !important; border: 2px solid #FF6600 !important; box-shadow: 0px 4px 15px rgba(0,0,0,0.5) !important; background-color: #000000 !important; }
-    
-    [data-testid="stForm"] { border: none !important; padding: 0 !important; background: transparent !important; }
-    .main-btn-container { display: flex; justify-content: center; align-items: center; width: 100%; margin-top: 20px; margin-bottom: 60px; }
-    .html-giant-btn { background-color: #FF6600 !important; color: #FFFFFF !important; font-size: 30px !important; font-family: 'Arial Black', sans-serif !important; font-weight: bold !important; height: 85px !important; width: 65% !important; border-radius: 15px !important; text-transform: uppercase !important; letter-spacing: 2px !important; display: flex !important; justify-content: center !important; align-items: center !important; text-decoration: none !important; box-shadow: 0px 0px 25px rgba(255, 102, 0, 0.6) !important; transition: 0.3s; }
-    .html-giant-btn:hover { background-color: #E05300 !important; color: #FFFFFF !important; }
-    .html-plan-btn { background-color: #FF6600 !important; color: white !important; font-size: 18px !important; font-family: 'Arial Black' !important; height: 50px !important; width: 100% !important; border-radius: 8px !important; display: flex !important; justify-content: center !important; text-decoration: none !important; text-transform: uppercase !important; }
+    [data-testid="stVideo"] { border-radius: 12px !important; border: 2px solid #FF6600 !important; box-shadow: 0px 4px 15px rgba(0,0,0,0.5) !important; background-color: #000000 !important; width: 100% !important; }
     .html-home-motor { display: flex; justify-content: center; align-items: center; width: 100%; margin-top: 15px; margin-bottom: 15px; }
-    .html-home-motor img { width: 340px !important; height: auto !important; border-radius: 12px; border: none !important; }
+    .html-home-motor img { width: 100%; max-width: 320px; height: auto !important; border-radius: 12px; }
     .html-brain-motor { display: flex; justify-content: center; align-items: center; width: 100%; margin-top: 10px; margin-bottom: 15px; }
-    .html-brain-motor img { width: 260px !important; height: auto !important; border-radius: 6px; border: none !important; }
+    .html-brain-motor img { width: 100%; max-width: 240px; height: auto !important; border-radius: 6px; }
     </style>
     """, unsafe_allow_html=True)
 query_params = st.query_params
@@ -125,80 +118,102 @@ def enviar_mensagem_chat():
             st.session_state["chat_history"].append({"role": "assistant", "content": resposta.content, "images": imagens_geradas})
 
 # ==========================================
-# RENDERIZAÇÃO DE ECRÃS MESTRE
+# RENDERIZAÇÃO DOS ECRÃS MESTRE
 # ==========================================
 if st.session_state["page"] == "home":
-    c_top1, c_top2, c_top3 = st.columns([2, 1, 0.6])
-    with c_top3: st.markdown('<a href="?p=login" target="_self" class="html-custom-btn-vazado">👤 Member Log In</a>', unsafe_allow_html=True)
+    c_top1, c_top2, c_top3 = st.columns([2, 1, 1])
+    with c_top3: 
+        if st.button("👤 Member Log In", use_container_width=True):
+            st.st.session_state["page"] = "login"
+            st.rerun()
+            
     st.markdown("<h1>V-Twin Tech Intelligence</h1>", unsafe_allow_html=True)
     if logo_base64: st.markdown(f'<div class="html-home-motor"><img src="data:image/jpeg;base64,{logo_base64}"></div>', unsafe_allow_html=True)
     st.markdown('<p class="sub-title">Everything about V-Twins, how to maintenance, how to fix it...</p>', unsafe_allow_html=True)
     st.markdown("---")
-    st.markdown("<h2>WHY CHOOSE V-TWIN TECH INTELLIGENCE?</h2>", unsafe_allow_html=True)
-    col_row1_left, col_row1_right = st.columns(2)
+    
+    st.markdown("<h2>WHY CHOOSE US?</h2>", unsafe_allow_html=True)
+    col_row1_left, col_row1_right = st.columns([1, 1])
     with col_row1_left: st.markdown('<div class="feature-box"><span class="feature-title">⚡ Instant Precision</span>Find torque specs, clearances, and data in seconds. Support up to 2024.</div>', unsafe_allow_html=True)
-    with col_row1_right: st.markdown('<div class="feature-box"><span class="feature-title">🛠️ Interactive Step-by-Step Chat</span>Our model is an advanced conversational assistant. Talk to the mechanic step-by-step.</div>', unsafe_allow_html=True)
-    col_row2_left, col_row2_right = st.columns(2)
+    with col_row1_right: st.markdown('<div class="feature-box"><span class="feature-title">🛠️ Interactive Chat</span>Our model is an advanced conversational assistant. Talk step-by-step.</div>', unsafe_allow_html=True)
+    
+    col_row2_left, col_row2_right = st.columns([1, 1])
     with col_row2_left: st.markdown('<div class="feature-box"><span class="feature-title">🔍 Advanced Diagnostics</span>Identify faults and error codes with our specialized AI.</div>', unsafe_allow_html=True)
-    with col_row2_right: st.markdown('<div class="feature-box"><span class="feature-title">🔊 Hands-Free Voice Expert</span>Talk to the "Master Tech" while your hands are on the tools.</div>', unsafe_allow_html=True)
+    with col_row2_right: st.markdown('<div class="feature-box"><span class="feature-title">🔊 Voice Expert</span>Talk to the "Master Tech" while your hands are on the tools.</div>', unsafe_allow_html=True)
+    
     st.markdown('<p class="promo-text">Get unlimited access to the entire database up to 2024</p>', unsafe_allow_html=True)
     
-    col_v1, col_v2, col_v3 = st.columns([0.5, 2, 0.5])
+    col_v1, col_v2, col_v3 = st.columns([0.1, 2, 0.1])
     with col_v2:
         if os.path.exists("demo_video.mp4"):
-            with open("demo_video.mp4", "rb") as v_file:
-                st.video(v_file.read(), format="video/mp4")
-        else:
-            st.markdown('<div style="text-align:center; color:#FF6600;">⚠️ Place your video file "demo_video.mp4" in the main project folder.</div>', unsafe_allow_html=True)
+            with open("demo_video.mp4", "rb") as v_file: st.video(v_file.read(), format="video/mp4")
+        else: st.markdown('<div style="text-align:center; color:#FF6600;">⚠️ Place "demo_video.mp4" in the main folder.</div>', unsafe_allow_html=True)
         
-    st.markdown("""<div class="main-btn-container"><a href="?p=pricing" target="_self" class="html-giant-btn">BUY INSTANT ACCESS — CHECK PRICING</a></div>""", unsafe_allow_html=True)
+    st.markdown("<br>", unsafe_allow_html=True)
+    if st.button("BUY INSTANT ACCESS — CHECK PRICING", use_container_width=True):
+        st.session_state["page"] = "pricing"
+        st.rerun()
+        
     st.markdown("""<div class="footer-contact-box"><a href="mailto:support@vtwintechai.com" class="footer-contact-link">📩 Need Help? Contact Us: support@vtwintechai.com</a></div>""", unsafe_allow_html=True)
 
 elif st.session_state["page"] == "pricing":
-    st.markdown('<a href="?p=home" target="_self" class="html-custom-btn-vazado" style="width:160px;">← Back to Home</a>', unsafe_allow_html=True)
+    if st.button("← Back to Home"):
+        st.session_state["page"] = "home"
+        st.rerun()
     st.markdown("<h1>Choose Your Access Plan</h1>", unsafe_allow_html=True)
-    col1, space, col2 = st.columns([2, 0.5, 2])
     
-    # 🚨 INJEÇÃO REAL DEFINITIVA CONFERIDA: LINKS DO TEU STRIPE DE PRODUÇÃO OFICIAIS ATIVOS 🚨
-    with col1: st.markdown('<div class="pricing-card"><h3>💡 Monthly Pass</h3><h2>$19.99</h2><p>Full Access to all wiring diagrams, diagnostics and torque specifications. Up to date model coverage. Cancel anytime with a single click.</p><br><a href="https://stripe.com" target="_blank" class="html-plan-btn">Subscribe Monthly</a></div>', unsafe_allow_html=True)
-    with col2: st.markdown('<div class="pricing-card" style="border:2px solid #FF6600;"><h3>⚡ Annual Pro</h3><h2>$199</h2><p>Save $40 with the annual membership. Continuous full workshop database unlock, structural step-by-step repair logs and master tech priority helper tools.</p><br><a href="https://stripe.com" target="_blank" class="html-plan-btn">Subscribe Annually</a></div>', unsafe_allow_html=True)
+    col1, col2 = st.columns([1, 1])
+    
+    # 🚨 TRANCA INDESTRUTÍVEL: BOTÕES NATIVOS CONTRA BLOQUEADORES DE POP-UPS LIGADOS AO STRIPE LIVE REAL 🚨
+    with col1: 
+        st.markdown('<div class="pricing-card"><h3>💡 Monthly Pass</h3><h2>$19.99</h2><p>Full Access to all wiring diagrams, diagnostics and torque specifications. Up to date model coverage. Cancel anytime.</p></div>', unsafe_allow_html=True)
+        st.link_button("Subscribe Monthly", "https://stripe.com", use_container_width=True)
+        
+    with col2: 
+        st.markdown('<div class="pricing-card" style="border:2px solid #FF6600;"><h3>⚡ Annual Pro</h3><h2>$199</h2><p>Save $40 with the annual membership. Continuous full workshop database unlock, structural step-by-step repair logs and priority tools.</p></div>', unsafe_allow_html=True)
+        st.link_button("Subscribe Annually", "https://stripe.com", use_container_width=True)
 
 elif st.session_state["page"] == "login":
-    st.markdown('<a href="?p=home" target="_self" class="html-custom-btn-vazado" style="width:160px;">← Back to Home</a>', unsafe_allow_html=True)
+    if st.button("← Back to Home"):
+        st.session_state["page"] = "home"
+        st.rerun()
     st.markdown("<h1>Secure Member Portal</h1>", unsafe_allow_html=True)
-    cl1, cl2, cl3 = st.columns([1, 1.5, 1])
+    cl1, cl2, cl3 = st.columns([1, 2, 1])
     with cl2:
         u_email = st.text_input("Email Address", key="login_usr")
         u_pass = st.text_input("Password", type="password", key="login_pwd")
-        st.markdown("<br>", unsafe_allow_html=True)
-        if u_email and u_pass:
+        if st.button("ACCESS DASHBOARD", use_container_width=True):
             if u_email in st.session_state["users_db"] and st.session_state["users_db"][u_email] == u_pass:
-                st.markdown('<a href="?p=brain" target="_self" class="html-custom-btn-solid">ACCESS DASHBOARD (CONFIRMED)</a>', unsafe_allow_html=True)
-            else: st.markdown('<div class="html-custom-btn-solid" style="background-color:#444!important; cursor:not-allowed;">Enter Valid Credentials</div>', unsafe_allow_html=True)
-        else: st.markdown('<a href="?p=brain" target="_self" class="html-custom-btn-solid">ACCESS DASHBOARD</a>', unsafe_allow_html=True)
+                st.session_state["page"] = "brain"
+                st.rerun()
+            else: st.error("Enter Valid Credentials")
 
 elif st.session_state["page"] == "register":
-    st.markdown('<a href="?p=home" target="_self" class="html-custom-btn-vazado" style="width:160px;">← Back to Home</a>', unsafe_allow_html=True)
+    if st.button("← Back to Home"):
+        st.session_state["page"] = "home"
+        st.rerun()
     st.markdown("<h1>💳 Setup Your Premium Account</h1>", unsafe_allow_html=True)
-    cl1, cl2, cl3 = st.columns([1, 1.5, 1])
+    cl1, cl2, cl3 = st.columns([1, 2, 1])
     with cl2:
         n_email = st.text_input("Enter Your Account Email", key="reg_usr")
         n_pass = st.text_input("Create Secret Password", type="password", key="reg_pwd")
-        st.markdown("<br>", unsafe_allow_html=True)
-        if n_email and n_pass:
-            st.session_state["users_db"][n_email] = n_pass
-            st.markdown('<a href="?p=login" target="_self" class="html-custom-btn-solid">ACTIVATE PREMIUM ACCESS (CONFIRMED)</a>', unsafe_allow_html=True)
-        else: st.markdown('<a href="?p=login" target="_self" class="html-custom-btn-solid">ACTIVATE PREMIUM ACCESS</a>', unsafe_allow_html=True)
+        if st.button("ACTIVATE PREMIUM ACCESS", use_container_width=True):
+            if n_email and n_pass:
+                st.session_state["users_db"][n_email] = n_pass
+                st.session_state["page"] = "login"
+                st.rerun()
 
 elif st.session_state["page"] == "brain":
-    c_b1, c_b2, c_b3 = st.columns([2, 1, 0.6])
-    with c_b2: st.markdown('<a href="?p=pricing" target="_self" class="html-custom-btn-vazado" style="width:100%;">💳 Cancel Subscription</a>', unsafe_allow_html=True)
-    with c_b3: st.markdown('<a href="?p=home" target="_self" class="html-custom-btn-vazado" style="width:100%;">🚪 Log Out</a>', unsafe_allow_html=True)
+    c_b1, c_b2 = st.columns([3, 1])
+    with c_b2: 
+        if st.button("🚪 Log Out", use_container_width=True):
+            st.session_state["page"] = "home"
+            st.rerun()
+            
     if logo_base64: st.markdown(f'<div class="html-brain-motor"><img src="data:image/jpeg;base64,{logo_base64}"></div>', unsafe_allow_html=True)
     st.markdown('<p class="red-slogan">Everything about V-Twins, how to maintenance, how to fix it...</p>', unsafe_allow_html=True)
     st.markdown('<div class="status-box-video">📊 Knowledge Base Status: Models up to 2024</div>', unsafe_allow_html=True)
     st.markdown("---")
-    st.markdown("### 💬 Master Tech Workshop Chat:")
     
     for msg in st.session_state["chat_history"]:
         if msg["role"] == "user": st.markdown(f'<div class="chat-bubble-user"><b>You:</b> {msg["content"]}</div>', unsafe_allow_html=True)
