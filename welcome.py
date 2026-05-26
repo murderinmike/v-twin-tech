@@ -82,7 +82,6 @@ st.markdown("""
     .footer-contact-link { color: #FF6600 !important; font-family: 'Arial Black', sans-serif !important; font-size: 16px !important; font-weight: bold !important; text-transform: uppercase !important; text-decoration: none !important; transition: 0.2s; }
     .footer-contact-link:hover { color: #FFFFFF !important; text-decoration: underline !important; }
     
-    /* REPRODUTOR DE VÍDEO COMPATÍVEL MESTRE COM PREVIEW HARLEY */
     .video-container-html5 { display: flex; justify-content: center; align-items: center; width: 100%; margin-top: 10px; margin-bottom: 25px; }
     
     [data-testid="stForm"] { border: none !important; padding: 0 !important; background: transparent !important; }
@@ -118,7 +117,7 @@ def enviar_mensagem_chat():
                 if caminho_pdf and os.path.exists(caminho_pdf):
                     try:
                         doc_fitz = fitz.open(caminho_pdf)
-                        pagina = doc_fitz.load_page(num_pagina)
+                        pagina = doc_fitz.open(num_pagina)
                         pix = pagina.get_pixmap(matrix=fitz.Matrix(2, 2))
                         imagens_geradas.append((pix.tobytes("png"), f"📍 Reference: {os.path.basename(caminho_pdf)} (Page {num_pagina + 1})"))
                         doc_fitz.close()
@@ -144,10 +143,14 @@ if st.session_state["page"] == "home":
     with col_row2_right: st.markdown('<div class="feature-box"><span class="feature-title">🔊 Hands-Free Voice Expert</span>Talk to the "Master Tech" while your hands are on the tools.</div>', unsafe_allow_html=True)
     st.markdown('<p class="promo-text">Get unlimited access to the entire database up to 2024</p>', unsafe_allow_html=True)
     
-    # 🚨 BLINDAGEM DE EMBED: SISTEMA HTML COMPATÍVEL COM STRIP INTERNACIONAL DE INCORPORAÇÃO 🚨
+    # 🚨 LINK DO VÍDEO CORRIGIDO PARA UM EMITENTE DE CÓDIGO ABERTO QUE FUNCIONA SEMPRE NA NUVEM 🚨
     col_v1, col_v2, col_v3 = st.columns([0.5, 2, 0.5])
     with col_v2:
-        st.video("https://youtube.com")
+        st.markdown("""
+            <div class="video-container-html5">
+                <iframe width="100%" height="450" src="https://vimeo.com" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen style="border-radius:12px; border:2px solid #FF6600;"></iframe>
+            </div>
+            """, unsafe_allow_html=True)
         
     st.markdown("""<div class="main-btn-container"><a href="?p=pricing" target="_self" class="html-giant-btn">BUY INSTANT ACCESS — CHECK PRICING</a></div>""", unsafe_allow_html=True)
     st.markdown("""<div class="footer-contact-box"><a href="mailto:support@vtwintechai.com" class="footer-contact-link">📩 Need Help? Contact Us: support@vtwintechai.com</a></div>""", unsafe_allow_html=True)
