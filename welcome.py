@@ -56,7 +56,7 @@ st.markdown("""
     .sub-title { color: #FF6600; text-align: center; font-size: calc(14px + 0.5vw); font-weight: bold; margin-top: 10px; margin-bottom: 30px; }
     .red-slogan { color: #FF2222 !important; text-align: center; font-size: 16px; font-weight: bold; font-family: 'Courier New', monospace; margin-top: 15px; margin-bottom: 15px; text-transform: uppercase; }
     
-    /* GRELHA ADAPTÁVEL PARA FUNCIONAR EM TELEMÓVEL */
+    /* GRELHA ADAPTÁVEL PARA TELEMÓVEL */
     .feature-box { background-color: #262626; padding: 20px; border-radius: 10px; border-left: 5px solid #FF6600; margin-bottom: 15px; min-height: 120px; font-size: 15px; color: #DDDDDD; font-family: sans-serif; }
     .feature-title { color: #FF6600; font-weight: bold; font-size: 17px; text-transform: uppercase; display: block; margin-bottom: 8px; }
     
@@ -121,10 +121,10 @@ def enviar_mensagem_chat():
 # RENDERIZAÇÃO DOS ECRÃS MESTRE
 # ==========================================
 if st.session_state["page"] == "home":
-    c_top1, c_top2, c_top3 = st.columns([2, 1, 1])
+    c_top1, c_top2, c_top3 = st.columns()
     with c_top3: 
         if st.button("👤 Member Log In", use_container_width=True):
-            st.st.session_state["page"] = "login"
+            st.session_state["page"] = "login"
             st.rerun()
             
     st.markdown("<h1>V-Twin Tech Intelligence</h1>", unsafe_allow_html=True)
@@ -133,11 +133,11 @@ if st.session_state["page"] == "home":
     st.markdown("---")
     
     st.markdown("<h2>WHY CHOOSE US?</h2>", unsafe_allow_html=True)
-    col_row1_left, col_row1_right = st.columns([1, 1])
+    col_row1_left, col_row1_right = st.columns()
     with col_row1_left: st.markdown('<div class="feature-box"><span class="feature-title">⚡ Instant Precision</span>Find torque specs, clearances, and data in seconds. Support up to 2024.</div>', unsafe_allow_html=True)
     with col_row1_right: st.markdown('<div class="feature-box"><span class="feature-title">🛠️ Interactive Chat</span>Our model is an advanced conversational assistant. Talk step-by-step.</div>', unsafe_allow_html=True)
     
-    col_row2_left, col_row2_right = st.columns([1, 1])
+    col_row2_left, col_row2_right = st.columns()
     with col_row2_left: st.markdown('<div class="feature-box"><span class="feature-title">🔍 Advanced Diagnostics</span>Identify faults and error codes with our specialized AI.</div>', unsafe_allow_html=True)
     with col_row2_right: st.markdown('<div class="feature-box"><span class="feature-title">🔊 Voice Expert</span>Talk to the "Master Tech" while your hands are on the tools.</div>', unsafe_allow_html=True)
     
@@ -162,9 +162,8 @@ elif st.session_state["page"] == "pricing":
         st.rerun()
     st.markdown("<h1>Choose Your Access Plan</h1>", unsafe_allow_html=True)
     
-    col1, col2 = st.columns([1, 1])
+    col1, col2 = st.columns()
     
-    # 🚨 TRANCA INDESTRUTÍVEL: BOTÕES NATIVOS CONTRA BLOQUEADORES DE POP-UPS LIGADOS AO STRIPE LIVE REAL 🚨
     with col1: 
         st.markdown('<div class="pricing-card"><h3>💡 Monthly Pass</h3><h2>$19.99</h2><p>Full Access to all wiring diagrams, diagnostics and torque specifications. Up to date model coverage. Cancel anytime.</p></div>', unsafe_allow_html=True)
         st.link_button("Subscribe Monthly", "https://stripe.com", use_container_width=True)
@@ -178,7 +177,7 @@ elif st.session_state["page"] == "login":
         st.session_state["page"] = "home"
         st.rerun()
     st.markdown("<h1>Secure Member Portal</h1>", unsafe_allow_html=True)
-    cl1, cl2, cl3 = st.columns([1, 2, 1])
+    cl1, cl2, cl3 = st.columns()
     with cl2:
         u_email = st.text_input("Email Address", key="login_usr")
         u_pass = st.text_input("Password", type="password", key="login_pwd")
@@ -193,7 +192,7 @@ elif st.session_state["page"] == "register":
         st.session_state["page"] = "home"
         st.rerun()
     st.markdown("<h1>💳 Setup Your Premium Account</h1>", unsafe_allow_html=True)
-    cl1, cl2, cl3 = st.columns([1, 2, 1])
+    cl1, cl2, cl3 = st.columns()
     with cl2:
         n_email = st.text_input("Enter Your Account Email", key="reg_usr")
         n_pass = st.text_input("Create Secret Password", type="password", key="reg_pwd")
@@ -204,7 +203,7 @@ elif st.session_state["page"] == "register":
                 st.rerun()
 
 elif st.session_state["page"] == "brain":
-    c_b1, c_b2 = st.columns([3, 1])
+    c_b1, c_b2 = st.columns()
     with c_b2: 
         if st.button("🚪 Log Out", use_container_width=True):
             st.session_state["page"] = "home"
