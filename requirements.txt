@@ -1,8 +1,6 @@
 streamlit
-openai
+PyMuPDF
 langchain-openai
 langchain-community
 faiss-cpu
-pymupdf
-pillow
-streamlit-mic-recorder
+python-dotenv
