@@ -145,12 +145,12 @@ if st.session_state["page"] == "home":
     with col_row2_right: st.markdown('<div class="feature-box"><span class="feature-title">🔊 Hands-Free Voice Expert</span>Talk to the "Master Tech" while your hands are on the tools.</div>', unsafe_allow_html=True)
     st.markdown('<p class="promo-text">Get unlimited access to the entire database up to 2024</p>', unsafe_allow_html=True)
     
-    # 🚨 SOLUÇÃO INDESTRUTÍVEL: TAG DE VÍDEO HTML5 QUE LÊ O TEU PRÓPRIO VÍDEO DO GITHUB SEM BLOQUEIOS DE CONTEÚDO 🚨
+    # TAG DE VÍDEO NATIVA QUE LE DO TEU GITHUB
     col_v1, col_v2, col_v3 = st.columns([0.5, 2, 0.5])
     with col_v2:
         st.markdown("""
             <div class="video-container-html5">
-                <video controls preload="metadata" poster="data:image/jpeg;base64">
+                <video controls preload="metadata">
                     <source src="https://githubusercontent.com" type="video/mp4">
                     Your browser does not support the video tag.
                 </video>
