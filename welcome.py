@@ -50,34 +50,28 @@ st.markdown("""
     [data-testid="stSidebar"], [data-testid="stSidebarCollapsedControl"], [data-testid="stSidebarNav"] { display: none !important; }
     .stApp { background-color: #121212; color: #FFFFFF; }
     
-    /* TÍTULOS RESPONSIVOS */
     h1 { color: #FF6600 !important; text-align: center; font-family: 'Arial Black'; font-size: calc(24px + 2vw) !important; text-transform: uppercase; margin-top: 10px; margin-bottom: 5px; }
     h2 { color: #FF6600 !important; text-align: center; font-family: 'Arial Black'; font-size: calc(18px + 1vw) !important; text-transform: uppercase; margin-top: 30px; margin-bottom: 20px; }
     .sub-title { color: #FF6600; text-align: center; font-size: calc(14px + 0.5vw); font-weight: bold; margin-top: 10px; margin-bottom: 30px; }
     .red-slogan { color: #FF2222 !important; text-align: center; font-size: 16px; font-weight: bold; font-family: 'Courier New', monospace; margin-top: 15px; margin-bottom: 15px; text-transform: uppercase; }
     
-    /* GRELHA ADAPTÁVEL PARA TELEMÓVEL */
     .feature-box { background-color: #262626; padding: 20px; border-radius: 10px; border-left: 5px solid #FF6600; margin-bottom: 15px; min-height: 120px; font-size: 15px; color: #DDDDDD; font-family: sans-serif; }
     .feature-title { color: #FF6600; font-weight: bold; font-size: 17px; text-transform: uppercase; display: block; margin-bottom: 8px; }
     
-    /* CARTÕES DE PREÇO LÍQUIDOS FLEXÍVEIS */
     .pricing-card { background-color: #262626; padding: 30px 20px; border-radius: 15px; text-align: center; border: 1px solid #333333; margin-bottom: 20px; width: 100%; box-sizing: border-box; }
     .pricing-card h3 { color: #FF6600 !important; font-family: 'Arial Black'; font-size: 22px; text-transform: uppercase; margin-bottom: 10px; }
     .pricing-card h2 { font-size: 38px !important; margin-top: 5px; margin-bottom: 10px; color: #FFFFFF !important; }
     .pricing-card p { color: #CCCCCC !important; font-size: 14px; line-height: 1.5; margin-bottom: 15px; font-family: sans-serif; }
     .promo-text { text-align: center !important; font-family: 'Arial Black'; font-size: calc(16px + 1vw) !important; color: #FF6600 !important; margin-top: 30px; margin-bottom: 25px; text-transform: uppercase; }
     
-    /* CHAT BUBBLES ADAPTÁVEIS */
     .chat-bubble-user { background-color: #262626 !important; border-right: 4px solid #FF6600 !important; padding: 12px; border-radius: 8px; margin-bottom: 10px; text-align: right; margin-left: 10%; color: #FFFFFF; font-family: sans-serif; }
     .chat-bubble-tech { background-color: #1E1E1E !important; border-left: 4px solid #FF6600 !important; padding: 15px; border-radius: 8px; margin-bottom: 15px; text-align: left; margin-right: 10%; color: #EEEEEE; font-family: sans-serif; line-height: 1.5; }
     
     .stTextInput > div > div > input { background-color: #121212 !important; color: white !important; border: 1px solid #666666 !important; height: 48px !important; }
     
-    /* ALINHAMENTO DO RODAPÉ */
     .footer-contact-box { text-align: center !important; margin-top: 40px; margin-bottom: 30px; padding: 20px; border-top: 1px solid #222; width: 100%; }
     .footer-contact-link { color: #FF6600 !important; font-family: 'Arial Black', sans-serif !important; font-size: 15px !important; font-weight: bold !important; text-transform: uppercase !important; text-decoration: none !important; }
     
-    /* AJUSTE NATIVO DOS BOTÕES DO STREAMLIT PARA ESTILO HARLEY */
     .stButton>button, .stDownloadButton>button { background-color: #FF6600 !important; color: white !important; font-family: 'Arial Black', sans-serif !important; text-transform: uppercase !important; width: 100% !important; height: 48px !important; border-radius: 8px !important; border: none !important; }
     .stButton>button:hover { background-color: #E05300 !important; color: white !important; }
     
@@ -117,9 +111,6 @@ def enviar_mensagem_chat():
                     except: pass
             st.session_state["chat_history"].append({"role": "assistant", "content": resposta.content, "images": imagens_geradas})
 
-# ==========================================
-# RENDERIZAÇÃO DOS ECRÃS MESTRE
-# ==========================================
 if st.session_state["page"] == "home":
     c_top1, c_top2, c_top3 = st.columns([2, 1, 0.6])
     with c_top3: 
@@ -133,11 +124,11 @@ if st.session_state["page"] == "home":
     st.markdown("---")
     
     st.markdown("<h2>WHY CHOOSE US?</h2>", unsafe_allow_html=True)
-    col_row1_left, col_row1_right = st.columns()
+    col_row1_left, col_row1_right = st.columns(2)
     with col_row1_left: st.markdown('<div class="feature-box"><span class="feature-title">⚡ Instant Precision</span>Find torque specs, clearances, and data in seconds. Support up to 2024.</div>', unsafe_allow_html=True)
     with col_row1_right: st.markdown('<div class="feature-box"><span class="feature-title">🛠️ Interactive Chat</span>Our model is an advanced conversational assistant. Talk step-by-step.</div>', unsafe_allow_html=True)
     
-    col_row2_left, col_row2_right = st.columns()
+    col_row2_left, col_row2_right = st.columns(2)
     with col_row2_left: st.markdown('<div class="feature-box"><span class="feature-title">🔍 Advanced Diagnostics</span>Identify faults and error codes with our specialized AI.</div>', unsafe_allow_html=True)
     with col_row2_right: st.markdown('<div class="feature-box"><span class="feature-title">🔊 Voice Expert</span>Talk to the "Master Tech" while your hands are on the tools.</div>', unsafe_allow_html=True)
     
@@ -162,9 +153,8 @@ elif st.session_state["page"] == "pricing":
         st.rerun()
     st.markdown("<h1>Choose Your Access Plan</h1>", unsafe_allow_html=True)
     
-    col1, col2 = st.columns()
+    col1, col2 = st.columns(2)
     
-    # 🚨 BOTÕES NATIVOS CONECTADOS AOS LINKS DE PRODUÇÃO REAIS DA STRIPE 🚨
     with col1: 
         st.markdown('<div class="pricing-card"><h3>💡 Monthly Pass</h3><h2>$19.99</h2><p>Full Access to all wiring diagrams, diagnostics and torque specifications. Up to date model coverage. Cancel anytime.</p></div>', unsafe_allow_html=True)
         st.link_button("Subscribe Monthly", "https://stripe.com", use_container_width=True)
@@ -178,7 +168,7 @@ elif st.session_state["page"] == "login":
         st.session_state["page"] = "home"
         st.rerun()
     st.markdown("<h1>Secure Member Portal</h1>", unsafe_allow_html=True)
-    cl1, cl2, cl3 = st.columns()
+    cl1, cl2, cl3 = st.columns([1, 2, 1])
     with cl2:
         u_email = st.text_input("Email Address", key="login_usr")
         u_pass = st.text_input("Password", type="password", key="login_pwd")
@@ -193,7 +183,7 @@ elif st.session_state["page"] == "register":
         st.session_state["page"] = "home"
         st.rerun()
     st.markdown("<h1>💳 Setup Your Premium Account</h1>", unsafe_allow_html=True)
-    cl1, cl2, cl3 = st.columns()
+    cl1, cl2, cl3 = st.columns([1, 2, 1])
     with cl2:
         n_email = st.text_input("Enter Your Account Email", key="reg_usr")
         n_pass = st.text_input("Create Secret Password", type="password", key="reg_pwd")
@@ -204,7 +194,7 @@ elif st.session_state["page"] == "register":
                 st.rerun()
 
 elif st.session_state["page"] == "brain":
-    c_b1, c_b2 = st.columns()
+    c_b1, c_b2 = st.columns([2, 1])
     with c_b2: 
         if st.button("🚪 Log Out", use_container_width=True):
             st.session_state["page"] = "home"
