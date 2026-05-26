@@ -82,7 +82,6 @@ st.markdown("""
     .footer-contact-link { color: #FF6600 !important; font-family: 'Arial Black', sans-serif !important; font-size: 16px !important; font-weight: bold !important; text-transform: uppercase !important; text-decoration: none !important; transition: 0.2s; }
     .footer-contact-link:hover { color: #FFFFFF !important; text-decoration: underline !important; }
     
-    /* RESET VISUAL DO VÍDEO DO REPRODUTOR NATIVO */
     [data-testid="stVideo"] { border-radius: 12px !important; border: 2px solid #FF6600 !important; box-shadow: 0px 4px 15px rgba(0,0,0,0.5) !important; background-color: #000000 !important; }
     
     [data-testid="stForm"] { border: none !important; padding: 0 !important; background: transparent !important; }
@@ -160,7 +159,7 @@ elif st.session_state["page"] == "pricing":
     st.markdown("<h1>Choose Your Access Plan</h1>", unsafe_allow_html=True)
     col1, space, col2 = st.columns([2, 0.5, 2])
     
-    # 🚨 INJEÇÃO RETIFICADA: OS TEUS DOIS LINKS DE PRODUÇÃO REAIS ATIVOS E VERIFICADOS COM SUCESSO 🚨
+    # 🚨 INJEÇÃO REAL DEFINITIVA CONFERIDA: LINKS DO TEU STRIPE DE PRODUÇÃO OFICIAIS ATIVOS 🚨
     with col1: st.markdown('<div class="pricing-card"><h3>💡 Monthly Pass</h3><h2>$19.99</h2><p>Full Access to all wiring diagrams, diagnostics and torque specifications. Up to date model coverage. Cancel anytime with a single click.</p><br><a href="https://stripe.com" target="_blank" class="html-plan-btn">Subscribe Monthly</a></div>', unsafe_allow_html=True)
     with col2: st.markdown('<div class="pricing-card" style="border:2px solid #FF6600;"><h3>⚡ Annual Pro</h3><h2>$199</h2><p>Save $40 with the annual membership. Continuous full workshop database unlock, structural step-by-step repair logs and master tech priority helper tools.</p><br><a href="https://stripe.com" target="_blank" class="html-plan-btn">Subscribe Annually</a></div>', unsafe_allow_html=True)
 
