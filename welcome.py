@@ -37,7 +37,7 @@ def carregar_sistema_ia():
         retriever = db.as_retriever(search_kwargs={"k": 3})
         llm = ChatOpenAI(model="gpt-4o-mini", temperature=0.2)
         
-        # CORREÇÃO DA IA MESTRE
+        # PROMPT DE CONVERSA OFICIAL EM FORMATO DE MENSAGENS COMPATÍVEL
         p = ChatPromptTemplate.from_messages([
             ("system", "You are a Master V-Twin Motorcycle Mechanic. Answer professionally based on context."),
             ("placeholder", "{chat_history}"),
@@ -45,6 +45,7 @@ def carregar_sistema_ia():
         ])
         return llm, retriever, p
     except: return None
+
 
 
 # 2. DESIGN VISUAL INDESTRUTÍVEL (CSS TOTALMENTE ISOLADO COM SUPORTE A BOTÕES NATIVOS)
