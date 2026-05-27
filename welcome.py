@@ -44,7 +44,7 @@ def carregar_sistema_ia():
         Answer professionally based on the context and history:""")
         return llm, retriever, p
     except: return None
-# 2. DESIGN VISUAL INDESTRUTÍVEL PREMIUM (CSS TOTALMENTE ISOLADO PARA PLANOS E ENTRADAS)
+# 2. DESIGN VISUAL INDESTRUTÍVEL (CSS TOTALMENTE ISOLADO COM SUPORTE A BOTÕES NATIVOS)
 st.markdown("""
     <style>
     [data-testid="stSidebar"], [data-testid="stSidebarCollapsedControl"], [data-testid="stSidebarNav"] { display: none !important; }
@@ -57,38 +57,37 @@ st.markdown("""
     .feature-box { background-color: #262626; padding: 20px; border-radius: 10px; border-left: 5px solid #FF6600; margin-bottom: 20px; min-height: 140px; font-size: 16px; color: #DDDDDD; font-family: sans-serif; }
     .feature-title { color: #FF6600; font-weight: bold; font-size: 18px; text-transform: uppercase; display: block; margin-bottom: 8px; }
     
-    .pricing-card { background-color: #262626; padding: 35px 25px; border-radius: 15px; text-align: center; border: 1px solid #333333; margin-bottom: 25px; min-height: 340px; }
+    .pricing-card { background-color: #262626; padding: 35px 25px 20px 25px; border-radius: 15px; text-align: center; border: 1px solid #333333; margin-bottom: 10px; min-height: 280px; }
     .pricing-card h3 { color: #FF6600 !important; font-family: 'Arial Black'; font-size: 24px; text-transform: uppercase; margin-bottom: 10px; }
     .pricing-card h2 { font-size: 42px !important; margin-top: 10px; margin-bottom: 10px; color: #FFFFFF !important; }
-    .pricing-card p { color: #CCCCCC !important; font-size: 15px; line-height: 1.6; margin-bottom: 20px; font-family: sans-serif; }
+    .pricing-card p { color: #CCCCCC !important; font-size: 15px; line-height: 1.6; margin-bottom: 10px; font-family: sans-serif; }
     .promo-text { text-align: center !important; font-family: 'Arial Black'; font-size: 32px; color: #FF6600 !important; margin-top: 40px; margin-bottom: 25px; text-transform: uppercase; }
     
     .chat-bubble-user { background-color: #262626 !important; border-right: 4px solid #FF6600 !important; padding: 12px; border-radius: 8px; margin-bottom: 10px; text-align: right; margin-left: 20%; color: #FFFFFF; font-family: sans-serif; }
     .chat-bubble-tech { background-color: #1E1E1E !important; border-left: 4px solid #FF6600 !important; padding: 15px; border-radius: 8px; margin-bottom: 15px; text-align: left; margin-right: 20%; color: #EEEEEE; font-family: sans-serif; line-height: 1.5; }
     
     .stTextInput > div > div > input { background-color: #121212 !important; color: white !important; border: 1px solid #666666 !important; height: 48px !important; }
-    .stTextInput button, [data-testid="stInputActionButton"] button { background-color: transparent !important; border: none !important; width: auto !important; height: auto !important; color: inherit !important; }
     
     .html-custom-btn-solid { background-color: #FF6600 !important; color: #FFFFFF !important; font-size: 16px !important; font-family: 'Arial Black', sans-serif !important; font-weight: bold !important; height: 48px; width: 100%; border-radius: 8px; border: none; text-transform: uppercase; display: flex; justify-content: center; align-items: center; text-decoration: none; cursor: pointer; box-shadow: 0px 4px 10px rgba(0,0,0,0.3); transition: 0.2s; margin-top: 15px; }
-    .html-custom-btn-solid:hover { background-color: #E05300 !important; color: #FFFFFF !important; text-decoration: none; }
+    .html-custom-btn-solid:hover { background-color: #E05300 !important; color: #FFFFFF !important; }
     
     .html-custom-btn-vazado { background-color: transparent !important; color: #FF6600 !important; font-size: 14px !important; font-family: 'Arial Black', sans-serif !important; font-weight: bold !important; height: 42px; width: 180px; border-radius: 6px; border: 2px solid #FF6600; text-transform: uppercase; display: flex; justify-content: center; align-items: center; text-decoration: none; cursor: pointer; transition: 0.2s; }
-    .html-custom-btn-vazado:hover { background-color: #FF6600 !important; color: #121212 !important; text-decoration: none; }
+    .html-custom-btn-vazado:hover { background-color: #FF6600 !important; color: #121212 !important; }
     
-    .stApp div[data-testid="stFormSubmitButton"] button { background-color: #FF6600 !important; border: none !important; height: 48px !important; width: 100% !important; border-radius: 8px !important; }
-    .stApp div[data-testid="stFormSubmitButton"] button p { color: #FFFFFF !important; font-family: 'Arial Black', sans-serif !important; font-weight: bold !important; font-size: 16px !important; text-transform: uppercase !important; }
+    /* MODIFICAÇÃO DO BOTÃO LINK NATIVO DO STREAMLIT PARA CORES DA HARLEY */
+    .stLinkButton>a { background-color: #FF6600 !important; color: #FFFFFF !important; font-size: 16px !important; font-family: 'Arial Black', sans-serif !important; font-weight: bold !important; height: 50px !important; width: 100% !important; border-radius: 8px !important; border: none !important; text-transform: uppercase !important; display: flex !important; justify-content: center !important; align-items: center !important; text-decoration: none !important; box-shadow: 0px 4px 10px rgba(0,0,0,0.3) !important; transition: 0.2s !important; }
+    .stLinkButton>a:hover { background-color: #E05300 !important; color: #FFFFFF !important; text-decoration: none !important; }
     
     .footer-contact-box { text-align: center !important; margin-top: 50px; margin-bottom: 30px; padding: 20px; border-top: 1px solid #222; width: 100%; }
-    .footer-contact-link { color: #FF6600 !important; font-family: 'Arial Black', sans-serif !important; font-size: 16px !important; font-weight: bold !important; text-transform: uppercase !important; text-decoration: none !important; transition: 0.2s; }
-    .footer-contact-link:hover { color: #FFFFFF !important; text-decoration: underline !important; }
+    .footer-contact-link { color: #FF6600 !important; font-family: 'Arial Black', sans-serif !important; font-size: 16px !important; font-weight: bold !important; text-transform: uppercase !important; text-decoration: none !important; }
     
     .video-container-html5 { display: flex; justify-content: center; align-items: center; width: 100%; margin-top: 10px; margin-bottom: 25px; }
+    .video-container-html5 video { width: 100% !important; max-width: 800px; height: 450px; border-radius: 12px; border: 2px solid #FF6600; box-shadow: 0px 4px 15px rgba(0,0,0,0.5) !important; background-color: #000000 !important; }
     
     [data-testid="stForm"] { border: none !important; padding: 0 !important; background: transparent !important; }
     .main-btn-container { display: flex; justify-content: center; align-items: center; width: 100%; margin-top: 20px; margin-bottom: 60px; }
     .html-giant-btn { background-color: #FF6600 !important; color: #FFFFFF !important; font-size: 30px !important; font-family: 'Arial Black', sans-serif !important; font-weight: bold !important; height: 85px !important; width: 65% !important; border-radius: 15px !important; text-transform: uppercase !important; letter-spacing: 2px !important; display: flex !important; justify-content: center !important; align-items: center !important; text-decoration: none !important; box-shadow: 0px 0px 25px rgba(255, 102, 0, 0.6) !important; transition: 0.3s; }
     .html-giant-btn:hover { background-color: #E05300 !important; color: #FFFFFF !important; }
-    .html-plan-btn { background-color: #FF6600 !important; color: white !important; font-size: 18px !important; font-family: 'Arial Black' !important; height: 50px !important; width: 100% !important; border-radius: 8px !important; display: flex !important; justify-content: center !important; text-decoration: none !important; text-transform: uppercase !important; }
     .html-home-motor { display: flex; justify-content: center; align-items: center; width: 100%; margin-top: 15px; margin-bottom: 15px; }
     .html-home-motor img { width: 340px !important; height: auto !important; border-radius: 12px; border: none !important; }
     .html-brain-motor { display: flex; justify-content: center; align-items: center; width: 100%; margin-top: 10px; margin-bottom: 15px; }
@@ -125,7 +124,7 @@ def enviar_mensagem_chat():
             st.session_state["chat_history"].append({"role": "assistant", "content": resposta.content, "images": imagens_geradas})
 
 # ==========================================
-# GESTÃO DE RENDERIZAÇÃO DE PÁGINAS
+# RENDERIZAÇÃO DOS ECRÃS MESTRE
 # ==========================================
 if st.session_state["page"] == "home":
     c_top1, c_top2, c_top3 = st.columns([2, 1, 0.6])
@@ -135,10 +134,10 @@ if st.session_state["page"] == "home":
     st.markdown('<p class="sub-title">Everything about V-Twins, how to maintenance, how to fix it...</p>', unsafe_allow_html=True)
     st.markdown("---")
     st.markdown("<h2>WHY CHOOSE V-TWIN TECH INTELLIGENCE?</h2>", unsafe_allow_html=True)
-    col_row1_left, col_row1_right = st.columns([2, 2])
+    col_row1_left, col_row1_right = st.columns([1, 1])
     with col_row1_left: st.markdown('<div class="feature-box"><span class="feature-title">⚡ Instant Precision</span>Find torque specs, clearances, and data in seconds. Support up to 2024.</div>', unsafe_allow_html=True)
     with col_row1_right: st.markdown('<div class="feature-box"><span class="feature-title">🛠️ Interactive Step-by-Step Chat</span>Our model is an advanced conversational assistant. Talk to the mechanic step-by-step.</div>', unsafe_allow_html=True)
-    col_row2_left, col_row2_right = st.columns([2, 2])
+    col_row2_left, col_row2_right = st.columns([1, 1])
     with col_row2_left: st.markdown('<div class="feature-box"><span class="feature-title">🔍 Advanced Diagnostics</span>Identify faults and error codes with our specialized AI.</div>', unsafe_allow_html=True)
     with col_row2_right: st.markdown('<div class="feature-box"><span class="feature-title">🔊 Hands-Free Voice Expert</span>Talk to the "Master Tech" while your hands are on the tools.</div>', unsafe_allow_html=True)
     st.markdown('<p class="promo-text">Get unlimited access to the entire database up to 2024</p>', unsafe_allow_html=True)
@@ -162,9 +161,13 @@ elif st.session_state["page"] == "pricing":
     st.markdown("<h1>Choose Your Access Plan</h1>", unsafe_allow_html=True)
     col1, space, col2 = st.columns([2, 0.5, 2])
     
-    # OS TEUS LINKS REAIS LIVE DE MODO DE PRODUÇÃO INJETADOS NO BOTÃO ORIGINAL HTML VITORIOSO
-    with col1: st.markdown('<div class="pricing-card"><h3>💡 Monthly Pass</h3><h2>$19.99</h2><p>Full Access to all wiring diagrams, diagnostics and torque specifications. Up to date model coverage. Cancel anytime with a single click.</p><br><a href="https://stripe.com" target="_blank" class="html-plan-btn">Subscribe Monthly</a></div>', unsafe_allow_html=True)
-    with col2: st.markdown('<div class="pricing-card" style="border:2px solid #FF6600;"><h3>⚡ Annual Pro</h3><h2>$199</h2><p>Save $40 with the annual membership. Continuous full workshop database unlock, structural step-by-step repair logs and master tech priority helper tools.</p><br><a href="https://stripe.com" target="_blank" class="html-plan-btn">Subscribe Annually</a></div>', unsafe_allow_html=True)
+    # 🚨 SOLUÇÃO REAL INBALIZÁVEL: BLOCOS VISUAIS ORIGINAIS COM INJEÇÃO DE BOTÃO NATIVO DO STREAMLIT QUE QUEBRA O BLOQUEIO CSP 🚨
+    with col1: 
+        st.markdown('<div class="pricing-card"><h3>💡 Monthly Pass</h3><h2>$19.99</h2><p>Full Access to all wiring diagrams, diagnostics and torque specifications. Up to date model coverage. Cancel anytime with a single click.</p></div>', unsafe_allow_html=True)
+        st.link_button("Subscribe Monthly", "https://stripe.com", use_container_width=True)
+    with col2: 
+        st.markdown('<div class="pricing-card" style="border:2px solid #FF6600;"><h3>⚡ Annual Pro</h3><h2>$199</h2><p>Save $40 with the annual membership. Continuous full workshop database unlock, structural step-by-step repair logs and master tech priority helper tools.</p></div>', unsafe_allow_html=True)
+        st.link_button("Subscribe Annually", "https://stripe.com", use_container_width=True)
 
 elif st.session_state["page"] == "login":
     st.markdown('<a href="?p=home" target="_self" class="html-custom-btn-vazado" style="width:160px;">← Back to Home</a>', unsafe_allow_html=True)
