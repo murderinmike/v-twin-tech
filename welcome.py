@@ -215,5 +215,3 @@ elif st.session_state["page"] == "brain":
 if st.button("🚀 Send Message to Master Tech", use_container_width=True):
     enviar_mensagem_chat()
     st.rerun()
-
-
