@@ -66,7 +66,9 @@ st.markdown("""
     .chat-bubble-user { background-color: #262626 !important; border-right: 4px solid #FF6600 !important; padding: 12px; border-radius: 8px; margin-bottom: 10px; text-align: right; margin-left: 20%; color: #FFFFFF; font-family: sans-serif; }
     .chat-bubble-tech { background-color: #1E1E1E !important; border-left: 4px solid #FF6600 !important; padding: 15px; border-radius: 8px; margin-bottom: 15px; text-align: left; margin-right: 20%; color: #EEEEEE; font-family: sans-serif; line-height: 1.5; }
     
-    .stTextInput > div > div > input { background-color: #121212 !important; color: white !important; border: 1px solid #666666 !important; height: 48px !important; }
+    .stTextInput, div[data-testid="stTextInputRootElement"] { background-color: #121212 !important; border: 1px solid #666666 !important; border-radius: 8px !important; padding: 5px !important; }
+    .stTextInput input { background-color: #121212 !important; color: white !important; border: none !important; }
+
     
     .html-custom-btn-solid { background-color: #FF6600 !important; color: #FFFFFF !important; font-size: 16px !important; font-family: 'Arial Black', sans-serif !important; font-weight: bold !important; height: 48px; width: 100%; border-radius: 8px; border: none; text-transform: uppercase; display: flex; justify-content: center; align-items: center; text-decoration: none; cursor: pointer; box-shadow: 0px 4px 10px rgba(0,0,0,0.3); transition: 0.2s; margin-top: 15px; }
     .html-custom-btn-solid:hover { background-color: #E05300 !important; color: #FFFFFF !important; }
