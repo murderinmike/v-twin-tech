@@ -195,7 +195,7 @@ elif st.session_state["page"] == "register":
 
 elif st.session_state["page"] == "brain":
     c_b1, c_b2, c_b3 = st.columns([2, 1, 0.6])
-    with c_b2: st.markdown('<a href="https://stripe.com/bpc_1TbkU6C2iMP0yKDcKqSylFme" target="_blank" class="html-custom-btn-vazado" style="width:100%;">💳 Cancel Subscription</a>', unsafe_allow_html=True)
+    with c_b2: st.markdown('<a href="https://billing.stripe.com/p/login/5kQcN4fLk6p8gvZapZdby00" target="_blank" class="html-custom-btn-vazado" style="width:100%;">💳 Cancel Subscription</a>', unsafe_allow_html=True)
     with c_b3: st.markdown('<a href="?p=home" target="_self" class="html-custom-btn-vazado" style="width:100%;">🚪 Log Out</a>', unsafe_allow_html=True)
     if logo_base64: st.markdown(f'<div class="html-brain-motor"><img src="data:image/jpeg;base64,{logo_base64}"></div>', unsafe_allow_html=True)
     st.markdown('<p class="red-slogan">Everything about V-Twins, how to maintenance, how to fix it...</p>', unsafe_allow_html=True)
