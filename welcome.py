@@ -36,14 +36,16 @@ def carregar_sistema_ia():
         db = FAISS.load_local("faiss_harley_global", embeddings, allow_dangerous_deserialization=True)
         retriever = db.as_retriever(search_kwargs={"k": 3})
         llm = ChatOpenAI(model="gpt-4o-mini", temperature=0.2)
-        p = ChatPromptTemplate.from_template("""You are a Master V-Twin Motorcycle Mechanic. 
-        You have access to the conversation history to understand context.
-        Context from Manuals: {context}
-        Chat History: {chat_history}
-        User Question: {input}
-        Answer professionally based on the context and history:""")
+        
+        # CORREÇÃO DA IA MESTRE
+        p = ChatPromptTemplate.from_messages([
+            ("system", "You are a Master V-Twin Motorcycle Mechanic. Answer professionally based on context."),
+            ("placeholder", "{chat_history}"),
+            ("human", "Context from Manuals: {context}\n\nQuestion: {input}")
+        ])
         return llm, retriever, p
     except: return None
+
 
 # 2. DESIGN VISUAL INDESTRUTÍVEL (CSS TOTALMENTE ISOLADO COM SUPORTE A BOTÕES NATIVOS)
 st.markdown("""
