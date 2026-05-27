@@ -40,81 +40,69 @@ def carregar_sistema_ia():
         return llm, retriever, p
     except: return None
 
-# ====================== CSS CORRIGIDO (Barra Branca + Centralização) ======================
+# ====================== CSS AJUSTADO ======================
 st.markdown("""
     <style>
-    [data-testid="stSidebar"], [data-testid="stSidebarCollapsedControl"], [data-testid="stSidebarNav"] { display: none !important; }
+    [data-testid="stSidebar"] { display: none !important; }
     
-    /* Fundo principal + Elimina barra branca */
-    .stApp, .main, .block-container, section[data-testid="stMain"], .stMain {
+    /* Fundo escuro + Remover barra branca */
+    .stApp, .main, .block-container, section[data-testid="stMain"] {
         background-color: #121212 !important;
     }
-    
-    div[data-testid="stVerticalBlock"] > div > div > div,
-    div[data-testid="stVerticalBlock"]:last-child,
+    div[data-testid="stVerticalBlock"] > div > div > div:last-child,
     .stApp > div > div > div > div:last-child {
         background-color: #121212 !important;
     }
-    
-    .element-container, .stMarkdown, .stContainer {
+    .element-container, .stMarkdown {
         background-color: transparent !important;
     }
 
-    /* === CENTRALIZAÇÃO FORTE === */
+    /* Centralização do Logo */
     .html-home-motor {
-        display: flex !important;
-        justify-content: center !important;
-        align-items: center !important;
-        width: 100% !important;
-        margin: 15px 0 !important;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        margin: 20px 0;
     }
     .html-home-motor img {
-        width: 340px !important;
-        height: auto !important;
+        width: 340px;
+        height: auto;
         border-radius: 12px;
     }
-    
+
+    /* Centralização do Botão Grande */
     .main-btn-container {
-        display: flex !important;
-        justify-content: center !important;
-        align-items: center !important;
-        width: 100% !important;
-        margin: 30px 0 60px 0 !important;
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        margin: 40px 0 60px 0;
     }
-    
+
     .html-giant-btn {
         background-color: #FF6600 !important;
         color: #FFFFFF !important;
-        font-size: 30px !important;
-        font-family: 'Arial Black', sans-serif !important;
+        font-size: 28px !important;
         font-weight: bold !important;
         height: 85px !important;
-        width: 65% !important;
-        max-width: 800px !important;
+        width: 70% !important;
+        max-width: 850px !important;
         border-radius: 15px !important;
-        text-transform: uppercase !important;
-        letter-spacing: 2px !important;
-        display: flex !important;
-        justify-content: center !important;
-        align-items: center !important;
-        text-decoration: none !important;
-        box-shadow: 0px 0px 25px rgba(255, 102, 0, 0.6) !important;
+        text-transform: uppercase;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-decoration: none;
+        box-shadow: 0 4px 15px rgba(255, 102, 0, 0.5);
     }
-    
-    /* Outros estilos */
-    h1 { color: #FF6600 !important; text-align: center; font-family: 'Arial Black'; font-size: 50px; text-transform: uppercase; margin-top: 10px; margin-bottom: 5px; }
-    h2 { color: #FF6600 !important; text-align: center; font-family: 'Arial Black'; font-size: 30px; text-transform: uppercase; margin-top: 30px; margin-bottom: 20px; }
+
+    h1, h2 { text-align: center !important; }
     .sub-title, .promo-text { text-align: center !important; }
-    
-    .chat-bubble-user { background-color: #262626 !important; border-right: 4px solid #FF6600 !important; padding: 12px; border-radius: 8px; margin-bottom: 10px; text-align: right; margin-left: 20%; color: #FFFFFF; }
-    .chat-bubble-tech { background-color: #1E1E1E !important; border-left: 4px solid #FF6600 !important; padding: 15px; border-radius: 8px; margin-bottom: 15px; text-align: left; margin-right: 20%; color: #EEEEEE; line-height: 1.5; }
-    
-    .footer-contact-box { text-align: center !important; margin-top: 50px; margin-bottom: 30px; padding: 20px; border-top: 1px solid #222; width: 100%; }
-    .footer-contact-link { color: #FF6600 !important; font-weight: bold !important; text-decoration: none !important; }
+
     </style>
     """, unsafe_allow_html=True)
 
-# ====================== FUNÇÃO CHAT ======================
+# ====================== FUNÇÃO DO CHAT ======================
 def enviar_mensagem_chat():
     query_usuario = st.session_state.get("campo_texto_input", "").strip()
     if query_usuario:
@@ -141,15 +129,18 @@ def enviar_mensagem_chat():
                     except: pass
             st.session_state["chat_history"].append({"role": "assistant", "content": resposta.content, "images": imagens_geradas})
 
-# ====================== PÁGINAS ======================
+# ====================== NAVEGAÇÃO ======================
 query_params = st.query_params
 if "p" in query_params: st.session_state["page"] = query_params["p"]
 
+# ====================== HOME PAGE ======================
 if st.session_state["page"] == "home":
     c_top1, c_top2, c_top3 = st.columns([2, 1, 0.6])
-    with c_top3: st.markdown('<a href="?p=login" target="_self" class="html-custom-btn-vazado">👤 Member Log In</a>', unsafe_allow_html=True)
+    with c_top3: 
+        st.markdown('<a href="?p=login" target="_self" class="html-custom-btn-vazado">👤 Member Log In</a>', unsafe_allow_html=True)
     
     st.markdown("<h1>V-Twin Tech Intelligence</h1>", unsafe_allow_html=True)
+    
     if logo_base64: 
         st.markdown(f'<div class="html-home-motor"><img src="data:image/jpeg;base64,{logo_base64}"></div>', unsafe_allow_html=True)
     
@@ -157,26 +148,40 @@ if st.session_state["page"] == "home":
     st.markdown("---")
     st.markdown("<h2>WHY CHOOSE V-TWIN TECH INTELLIGENCE?</h2>", unsafe_allow_html=True)
     
-    col_row1_left, col_row1_right = st.columns([1, 1])
-    with col_row1_left: st.markdown('<div class="feature-box"><span class="feature-title">⚡ Instant Precision</span>Find torque specs, clearances, and data in seconds. Support up to 2024.</div>', unsafe_allow_html=True)
-    with col_row1_right: st.markdown('<div class="feature-box"><span class="feature-title">🛠️ Interactive Step-by-Step Chat</span>Our model is an advanced conversational assistant. Talk to the mechanic step-by-step.</div>', unsafe_allow_html=True)
-    
-    col_row2_left, col_row2_right = st.columns([1, 1])
-    with col_row2_left: st.markdown('<div class="feature-box"><span class="feature-title">🔍 Advanced Diagnostics</span>Identify faults and error codes with our specialized AI.</div>', unsafe_allow_html=True)
-    with col_row2_right: st.markdown('<div class="feature-box"><span class="feature-title">🔊 Hands-Free Voice Expert</span>Talk to the "Master Tech" while your hands are on the tools.</div>', unsafe_allow_html=True)
+    col1, col2 = st.columns(2)
+    with col1:
+        st.markdown('<div class="feature-box"><span class="feature-title">⚡ Instant Precision</span>Find torque specs, clearances, and data in seconds. Support up to 2024.</div>', unsafe_allow_html=True)
+        st.markdown('<div class="feature-box"><span class="feature-title">🔍 Advanced Diagnostics</span>Identify faults and error codes with our specialized AI.</div>', unsafe_allow_html=True)
+    with col2:
+        st.markdown('<div class="feature-box"><span class="feature-title">🛠️ Interactive Step-by-Step Chat</span>Our model is an advanced conversational assistant. Talk to the mechanic step-by-step.</div>', unsafe_allow_html=True)
+        st.markdown('<div class="feature-box"><span class="feature-title">🔊 Hands-Free Voice Expert</span>Talk to the "Master Tech" while your hands are on the tools.</div>', unsafe_allow_html=True)
     
     st.markdown('<p class="promo-text">Get unlimited access to the entire database up to 2024</p>', unsafe_allow_html=True)
     
+    # Vídeo
     col_v1, col_v2, col_v3 = st.columns([0.5, 2, 0.5])
     with col_v2:
         if os.path.exists("demo_video.mp4"):
             with open("demo_video.mp4", "rb") as v_file:
                 st.video(v_file.read(), format="video/mp4")
-        
-    st.markdown("""<div class="main-btn-container"><a href="?p=pricing" target="_self" class="html-giant-btn">BUY INSTANT ACCESS — CHECK PRICING</a></div>""", unsafe_allow_html=True)
-    st.markdown("""<div class="footer-contact-box"><a href="mailto:support@vtwintechai.com" class="footer-contact-link">📩 Need Help? Contact Us: support@vtwintechai.com</a></div>""", unsafe_allow_html=True)
+    
+    # Botão Grande
+    st.markdown("""<div class="main-btn-container">
+        <a href="?p=pricing" target="_self" class="html-giant-btn">BUY INSTANT ACCESS — CHECK PRICING</a>
+    </div>""", unsafe_allow_html=True)
+    
+    st.markdown("""<div class="footer-contact-box">
+        <a href="mailto:support@vtwintechai.com" class="footer-contact-link">📩 Need Help? Contact Us: support@vtwintechai.com</a>
+    </div>""", unsafe_allow_html=True)
 
-# (O resto das páginas login, pricing, brain mantido igual - se quiseres posso enviar completo)
+# ====================== OUTRAS PÁGINAS ======================
+elif st.session_state["page"] == "pricing":
+    st.markdown('<a href="?p=home" target="_self" class="html-custom-btn-vazado" style="width:160px;">← Back to Home</a>', unsafe_allow_html=True)
+    st.markdown("<h1>Choose Your Access Plan</h1>", unsafe_allow_html=True)
+    # ... (resto do pricing igual ao teu original)
+
+elif st.session_state["page"] == "login":
+    # ... (mantém o teu código de login)
+
 elif st.session_state["page"] == "brain":
-    # ... (podes manter o que tinhas)
-    pass
+    # ... (mantém o teu código do chat)
