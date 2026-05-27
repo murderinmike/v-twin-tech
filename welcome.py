@@ -218,7 +218,11 @@ elif st.session_state["page"] == "brain":
                 for img_bytes, ref_title in msg["images"]: st.markdown(f"**{ref_title}**"); st.image(img_bytes, use_container_width=True)
     st.markdown("---")
     
+        # FUNÇÃO DE CALLBACK PARA LIMPAR A CAIXA APÓS O ENTER
+    if "campo_texto_input" in st.session_state and st.session_state["campo_texto_input"].strip():
+        enviar_mensagem_chat()
+        st.session_state["campo_texto_input"] = ""
+        st.rerun()
+
+    # CAMPO DE TEXTO QUE ENVIA APENAS COM ENTER
     st.text_input("🔧 Write your message to the Mechanic:", key="campo_texto_input")
-    if st.button("Send Message", use_container_width=True):
-            enviar_mensagem_chat()
-            st.rerun()
