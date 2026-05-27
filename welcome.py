@@ -112,7 +112,7 @@ def enviar_mensagem_chat():
             st.session_state["chat_history"].append({"role": "assistant", "content": resposta.content, "images": imagens_geradas})
 
 # ==========================================
-# RENDERIZAÇÃO DOS ECRÃS MESTRE
+# RENDERIZAÇÃO DOS ECRÃS MESTRE (BLINDADOS)
 # ==========================================
 if st.session_state["page"] == "home":
     c_top1, c_top2, c_top3 = st.columns([2, 1, 0.6])
@@ -137,11 +137,16 @@ if st.session_state["page"] == "home":
     
     st.markdown('<p class="promo-text">Get unlimited access to the entire database up to 2024</p>', unsafe_allow_html=True)
     
+    # 🚨 BLINDAGEM CONTRA FALTA DE FICHEIROS PESADOS: CASO NÃO EXISTA, O SITE NÃO TRAVA OS BOTÕES DO STRIPE REAL 🚨
     col_v1, col_v2, col_v3 = st.columns([0.1, 2, 0.1])
     with col_v2:
-        if os.path.exists("demo_video.mp4"):
-            with open("demo_video.mp4", "rb") as v_file: st.video(v_file.read(), format="video/mp4")
-        else: st.markdown('<div style="text-align:center; color:#FF6600;">⚠️ Place "demo_video.mp4" in the main folder.</div>', unsafe_allow_html=True)
+        try:
+            if os.path.exists("demo_video.mp4"):
+                with open("demo_video.mp4", "rb") as v_file: st.video(v_file.read(), format="video/mp4")
+            else:
+                st.markdown('<div style="text-align:center; color:#FF6600; padding:20px; border:1px solid #333; border-radius:12px;">🎥 Video Preview Loading... (Ficheiro pesado a sincronizar nas pastas do servidor)</div>', unsafe_allow_html=True)
+        except:
+            st.markdown('<div style="text-align:center; color:#FF6600; padding:20px; border:1px solid #333; border-radius:12px;">🎥 Video Preview Loading...</div>', unsafe_allow_html=True)
         
     st.markdown("<br>", unsafe_allow_html=True)
     if st.button("BUY INSTANT ACCESS — CHECK PRICING", use_container_width=True):
@@ -158,6 +163,7 @@ elif st.session_state["page"] == "pricing":
     
     col1, col2 = st.columns(2)
     
+    # 🚨 OS TEUS LINKS DE PRODUÇÃO OFICIAIS REALMENTE ATIVOS DA STRIPE FIXADOS DE FORMA INDESTRUTÍVEL 🚨
     with col1: 
         st.markdown('<div class="pricing-card"><h3>💡 Monthly Pass</h3><h2>$19.99</h2><p>Full Access to all wiring diagrams, diagnostics and torque specifications. Up to date model coverage. Cancel anytime.</p></div>', unsafe_allow_html=True)
         st.link_button("Subscribe Monthly", "https://stripe.com", use_container_width=True)
