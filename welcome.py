@@ -112,7 +112,7 @@ def enviar_mensagem_chat():
             st.session_state["chat_history"].append({"role": "assistant", "content": resposta.content, "images": imagens_geradas})
 
 # ==========================================
-# GESTÃO DE REDIRECIONAMENTOS DE PÁGINAS
+# RENDERIZAÇÃO DOS ECRÃS MESTRE
 # ==========================================
 if st.session_state["page"] == "home":
     c_top1, c_top2, c_top3 = st.columns([2, 1, 0.6])
@@ -171,7 +171,7 @@ elif st.session_state["page"] == "login":
         st.session_state["page"] = "home"
         st.rerun()
     st.markdown("<h1>Secure Member Portal</h1>", unsafe_allow_html=True)
-    cl1, cl2, cl3 = st.columns([1, 2, 1])
+    cl1, cl2, cl3 = st.columns()
     with cl2:
         u_email = st.text_input("Email Address", key="login_usr")
         u_pass = st.text_input("Password", type="password", key="login_pwd")
@@ -186,7 +186,7 @@ elif st.session_state["page"] == "register":
         st.session_state["page"] = "home"
         st.rerun()
     st.markdown("<h1>💳 Setup Your Premium Account</h1>", unsafe_allow_html=True)
-    cl1, cl2, cl3 = st.columns([1, 2, 1])
+    cl1, cl2, cl3 = st.columns()
     with cl2:
         n_email = st.text_input("Enter Your Account Email", key="reg_usr")
         n_pass = st.text_input("Create Secret Password", type="password", key="reg_pwd")
@@ -197,7 +197,7 @@ elif st.session_state["page"] == "register":
                 st.rerun()
 
 elif st.session_state["page"] == "brain":
-    c_b1, c_b2 = st.columns([3, 1])
+    c_b1, c_b2 = st.columns()
     with c_b2: 
         if st.button("🚪 Log Out", use_container_width=True):
             st.session_state["page"] = "home"
