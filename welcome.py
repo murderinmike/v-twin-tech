@@ -37,34 +37,22 @@ def carregar_sistema_ia():
         retriever = db.as_retriever(search_kwargs={"k": 3})
         llm = ChatOpenAI(model="gpt-4o-mini", temperature=0.2)
         
+        # PROMPT DE CONVERSA OFICIAL EM FORMATO DE MENSAGENS COMPATÍVEL
         p = ChatPromptTemplate.from_messages([
             ("system", "You are a Master V-Twin Motorcycle Mechanic. Answer professionally based on context."),
             ("placeholder", "{chat_history}"),
             ("human", "Context from Manuals: {context}\n\nQuestion: {input}")
         ])
         return llm, retriever, p
-    except Exception as e:
-        return None
+    except: return None
 
-# ====================== CSS COM CORREÇÃO DA BARRA BRANCA ======================
+
+
+# 2. DESIGN VISUAL INDESTRUTÍVEL (CSS TOTALMENTE ISOLADO COM SUPORTE A BOTÕES NATIVOS)
 st.markdown("""
     <style>
     [data-testid="stSidebar"], [data-testid="stSidebarCollapsedControl"], [data-testid="stSidebarNav"] { display: none !important; }
-    .stApp, .main, .block-container, section[data-testid="stMain"] { 
-        background-color: #121212 !important; 
-    }
-    
-    /* === CORREÇÃO FORTE DA BARRA BRANCA === */
-    div[data-testid="stVerticalBlock"] > div > div > div,
-    .stApp > div > div > div > div:last-child,
-    div[data-testid="stVerticalBlock"]:last-child {
-        background-color: #121212 !important;
-    }
-    
-    .element-container, .stMarkdown, .stContainer {
-        background-color: transparent !important;
-    }
-
+    .stApp { background-color: #121212; color: #FFFFFF; }
     h1 { color: #FF6600 !important; text-align: center; font-family: 'Arial Black'; font-size: 50px; text-transform: uppercase; margin-top: 10px; margin-bottom: 5px; }
     h2 { color: #FF6600 !important; text-align: center; font-family: 'Arial Black'; font-size: 30px; text-transform: uppercase; margin-top: 30px; margin-bottom: 20px; }
     .sub-title { color: #FF6600; text-align: center; font-size: 22px; font-weight: bold; margin-top: 10px; margin-bottom: 30px; }
@@ -74,6 +62,9 @@ st.markdown("""
     .feature-title { color: #FF6600; font-weight: bold; font-size: 18px; text-transform: uppercase; display: block; margin-bottom: 8px; }
     
     .pricing-card { background-color: #262626; padding: 35px 25px 20px 25px; border-radius: 15px; text-align: center; border: 1px solid #333333; margin-bottom: 10px; min-height: 280px; }
+    .pricing-card h3 { color: #FF6600 !important; font-family: 'Arial Black'; font-size: 24px; text-transform: uppercase; margin-bottom: 10px; }
+    .pricing-card h2 { font-size: 42px !important; margin-top: 10px; margin-bottom: 10px; color: #FFFFFF !important; }
+    .pricing-card p { color: #CCCCCC !important; font-size: 15px; line-height: 1.6; margin-bottom: 10px; font-family: sans-serif; }
     .promo-text { text-align: center !important; font-family: 'Arial Black'; font-size: 32px; color: #FF6600 !important; margin-top: 40px; margin-bottom: 25px; text-transform: uppercase; }
     
     .chat-bubble-user { background-color: #262626 !important; border-right: 4px solid #FF6600 !important; padding: 12px; border-radius: 8px; margin-bottom: 10px; text-align: right; margin-left: 20%; color: #FFFFFF; font-family: sans-serif; }
@@ -81,9 +72,30 @@ st.markdown("""
     
     div[data-testid="stTextInputRootElement"], .stTextInput>div { background-color: #121212 !important; border: 1px solid #666666 !important; border-radius: 8px !important; }
     .stTextInput input { background-color: #121212 !important; color: white !important; border: none !important; }
+    div[data-testid="stTextInputRootElement"]::after, .stTextInput>div::after { display: none !important; }
+
+
     
+    .html-custom-btn-solid { background-color: #FF6600 !important; color: #FFFFFF !important; font-size: 16px !important; font-family: 'Arial Black', sans-serif !important; font-weight: bold !important; height: 48px; width: 100%; border-radius: 8px; border: none; text-transform: uppercase; display: flex; justify-content: center; align-items: center; text-decoration: none; cursor: pointer; box-shadow: 0px 4px 10px rgba(0,0,0,0.3); transition: 0.2s; margin-top: 15px; }
+    .html-custom-btn-solid:hover { background-color: #E05300 !important; color: #FFFFFF !important; }
+    
+    .html-custom-btn-vazado { background-color: transparent !important; color: #FF6600 !important; font-size: 14px !important; font-family: 'Arial Black', sans-serif !important; font-weight: bold !important; height: 42px; width: 180px; border-radius: 6px; border: 2px solid #FF6600; text-transform: uppercase; display: flex; justify-content: center; align-items: center; text-decoration: none; cursor: pointer; transition: 0.2s; }
+    .html-custom-btn-vazado:hover { background-color: #FF6600 !important; color: #121212 !important; }
+    
+    /* MODIFICAÇÃO DO BOTÃO LINK NATIVO DO STREAMLIT PARA CORES DA HARLEY */
+    .stLinkButton>a { background-color: #FF6600 !important; color: #FFFFFF !important; font-size: 16px !important; font-family: 'Arial Black', sans-serif !important; font-weight: bold !important; height: 50px !important; width: 100% !important; border-radius: 8px !important; border: none !important; text-transform: uppercase !important; display: flex !important; justify-content: center !important; align-items: center !important; text-decoration: none !important; box-shadow: 0px 4px 10px rgba(0,0,0,0.3) !important; transition: 0.2s !important; }
+    .stLinkButton>a:hover { background-color: #E05300 !important; color: #FFFFFF !important; text-decoration: none !important; }
+    
+    .footer-contact-box { text-align: center !important; margin-top: 50px; margin-bottom: 30px; padding: 20px; border-top: 1px solid #222; width: 100%; }
+    .footer-contact-link { color: #FF6600 !important; font-family: 'Arial Black', sans-serif !important; font-size: 16px !important; font-weight: bold !important; text-transform: uppercase !important; text-decoration: none !important; }
+    
+    .video-container-html5 { display: flex; justify-content: center; align-items: center; width: 100%; margin-top: 10px; margin-bottom: 25px; }
+    .video-container-html5 video { width: 100% !important; max-width: 800px; height: 450px; border-radius: 12px; border: 2px solid #FF6600; box-shadow: 0px 4px 15px rgba(0,0,0,0.5) !important; background-color: #000000 !important; }
+    
+    [data-testid="stForm"] { border: none !important; padding: 0 !important; background: transparent !important; }
     .main-btn-container { display: flex; justify-content: center; align-items: center; width: 100%; margin-top: 20px; margin-bottom: 60px; }
     .html-giant-btn { background-color: #FF6600 !important; color: #FFFFFF !important; font-size: 30px !important; font-family: 'Arial Black', sans-serif !important; font-weight: bold !important; height: 85px !important; width: 65% !important; border-radius: 15px !important; text-transform: uppercase !important; letter-spacing: 2px !important; display: flex !important; justify-content: center !important; align-items: center !important; text-decoration: none !important; box-shadow: 0px 0px 25px rgba(255, 102, 0, 0.6) !important; transition: 0.3s; }
+    .html-giant-btn:hover { background-color: #E05300 !important; color: #FFFFFF !important; }
     .html-home-motor { display: flex; justify-content: center; align-items: center; width: 100%; margin-top: 15px; margin-bottom: 15px; }
     .html-home-motor img { width: 340px !important; height: auto !important; border-radius: 12px; border: none !important; }
     .html-brain-motor { display: flex; justify-content: center; align-items: center; width: 100%; margin-top: 10px; margin-bottom: 15px; }
@@ -96,29 +108,29 @@ if "p" in query_params: st.session_state["page"] = query_params["p"]
 
 def enviar_mensagem_chat():
     query_usuario = st.session_state.get("campo_texto_input", "").strip()
-    if not query_usuario:
-        return
-    
-    st.session_state["chat_history"].append({"role": "user", "content": query_usuario})
-    sistema_ia = carregar_sistema_ia()
-    if sistema_ia is None:
-        st.session_state["chat_history"].append({"role": "assistant", "content": "Erro: Sistema IA não carregado. Verifique se a pasta 'faiss_harley_global' existe e se a chave OPENAI_API_KEY está no .env"})
-        return
-    
-    llm, retriever, p = sistema_ia
-    docs = retriever.invoke(query_usuario)
-    contexto_texto = "\n".join([doc.page_content for doc in docs])
-    historico_texto = "\n".join([f"{m['role']}: {m['content']}" for m in st.session_state["chat_history"][-5:]])
-    
-    try:
-        resposta = llm.invoke(p.format_messages(
-            context=contexto_texto,
-            chat_history=historico_texto,
-            input=query_usuario
-        ))
-        st.session_state["chat_history"].append({"role": "assistant", "content": resposta.content})
-    except Exception as e:
-        st.session_state["chat_history"].append({"role": "assistant", "content": f"Erro na IA: {str(e)}"})
+    if query_usuario:
+        st.session_state["chat_history"].append({"role": "user", "content": query_usuario})
+        sistema_ia = carregar_sistema_ia()
+        if sistema_ia is not None:
+            llm, retriever, p = sistema_ia
+            docs = retriever.invoke(query_usuario)
+            contexto_texto = "\n".join([doc.page_content for doc in docs])
+            historico_texto = "\n".join([f"{m['role']}: {m['content']}" for m in st.session_state["chat_history"][-5:]])
+            resposta = llm.invoke(p.format(context=contexto_texto, chat_history=historico_texto, input=query_usuario))
+            
+            imagens_geradas = []
+            for doc in docs:
+                caminho_pdf = doc.metadata.get("source", "")
+                num_pagina = doc.metadata.get("page", 0)
+                if caminho_pdf and os.path.exists(caminho_pdf):
+                    try:
+                        doc_fitz = fitz.open(caminho_pdf)
+                        pagina = doc_fitz.load_page(num_pagina)
+                        pix = pagina.get_pixmap(matrix=fitz.Matrix(2, 2))
+                        imagens_geradas.append((pix.tobytes("png"), f"📍 Reference: {os.path.basename(caminho_pdf)} (Page {num_pagina + 1})"))
+                        doc_fitz.close()
+                    except: pass
+            st.session_state["chat_history"].append({"role": "assistant", "content": resposta.content, "images": imagens_geradas})
 
 # ==========================================
 # RENDERIZAÇÃO DOS ECRÃS MESTRE
@@ -145,14 +157,16 @@ if st.session_state["page"] == "home":
         with open("demo_video.mp4", "rb") as v_file:
             st.video(v_file.read(), format="video/mp4")
 
+
+        
     st.markdown("""<div class="main-btn-container"><a href="?p=pricing" target="_self" class="html-giant-btn">BUY INSTANT ACCESS — CHECK PRICING</a></div>""", unsafe_allow_html=True)
     st.markdown("""<div class="footer-contact-box"><a href="mailto:support@vtwintechai.com" class="footer-contact-link">📩 Need Help? Contact Us: support@vtwintechai.com</a></div>""", unsafe_allow_html=True)
 
-# (O resto das páginas login, pricing, register e brain mantido igual)
 elif st.session_state["page"] == "pricing":
     st.markdown('<a href="?p=home" target="_self" class="html-custom-btn-vazado" style="width:160px;">← Back to Home</a>', unsafe_allow_html=True)
     st.markdown("<h1>Choose Your Access Plan</h1>", unsafe_allow_html=True)
     col1, space, col2 = st.columns([2, 0.5, 2])
+    
     with col1: 
         st.markdown('<div class="pricing-card"><h3>💡 Monthly Pass</h3><h2>$19.99</h2><p>Full Access to all wiring diagrams, diagnostics and torque specifications. Up to date model coverage. Cancel anytime with a single click.</p></div>', unsafe_allow_html=True)
         st.link_button("Subscribe Monthly", "https://buy.stripe.com/5kQcN4fLk6p8gvZapZdby00", use_container_width=True)
@@ -174,6 +188,19 @@ elif st.session_state["page"] == "login":
             else: st.markdown('<div class="html-custom-btn-solid" style="background-color:#444!important; cursor:not-allowed;">Enter Valid Credentials</div>', unsafe_allow_html=True)
         else: st.markdown('<a href="?p=brain" target="_self" class="html-custom-btn-solid">ACCESS DASHBOARD</a>', unsafe_allow_html=True)
 
+elif st.session_state["page"] == "register":
+    st.markdown('<a href="?p=home" target="_self" class="html-custom-btn-vazado" style="width:160px;">← Back to Home</a>', unsafe_allow_html=True)
+    st.markdown("<h1>💳 Setup Your Premium Account</h1>", unsafe_allow_html=True)
+    cl1, cl2, cl3 = st.columns([1, 1.5, 1])
+    with cl2:
+        n_email = st.text_input("Enter Your Account Email", key="reg_usr")
+        n_pass = st.text_input("Create Secret Password", type="password", key="reg_pwd")
+        st.markdown("<br>", unsafe_allow_html=True)
+        if n_email and n_pass:
+            st.session_state["users_db"][n_email] = n_pass
+            st.markdown('<a href="?p=login" target="_self" class="html-custom-btn-solid">ACTIVATE PREMIUM ACCESS (CONFIRMED)</a>', unsafe_allow_html=True)
+        else: st.markdown('<a href="?p=login" target="_self" class="html-custom-btn-solid">ACTIVATE PREMIUM ACCESS</a>', unsafe_allow_html=True)
+
 elif st.session_state["page"] == "brain":
     c_b1, c_b2, c_b3 = st.columns([2, 1, 0.6])
     with c_b2: st.markdown('<a href="https://billing.stripe.com/p/login/5kQcN4fLk6p8gvZapZdby00" target="_blank" class="html-custom-btn-vazado" style="width:100%;">💳 Cancel Subscription</a>', unsafe_allow_html=True)
@@ -192,7 +219,11 @@ elif st.session_state["page"] == "brain":
                 for img_bytes, ref_title in msg["images"]: st.markdown(f"**{ref_title}**"); st.image(img_bytes, use_container_width=True)
     st.markdown("---")
     
-    st.text_input("🔧 Write your message to the Mechanic:", key="campo_texto_input")
-    if st.button("🚀 Send Message to Master Tech", use_container_width=True):
+        # FUNÇÃO DE CALLBACK PARA LIMPAR A CAIXA APÓS O ENTER
+    if "campo_texto_input" in st.session_state and st.session_state["campo_texto_input"].strip():
         enviar_mensagem_chat()
+        st.session_state["campo_texto_input"] = ""
         st.rerun()
+
+    # CAMPO DE TEXTO QUE ENVIA APENAS COM ENTER
+    st.text_input("🔧 Write your message to the Mechanic:", key="campo_texto_input")
