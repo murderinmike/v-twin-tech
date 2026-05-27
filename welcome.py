@@ -46,8 +46,6 @@ def carregar_sistema_ia():
         return llm, retriever, p
     except: return None
 
-
-
 # 2. DESIGN VISUAL INDESTRUTÍVEL (CSS TOTALMENTE ISOLADO COM SUPORTE A BOTÕES NATIVOS)
 st.markdown("""
     <style>
@@ -106,31 +104,53 @@ st.markdown("""
 query_params = st.query_params
 if "p" in query_params: st.session_state["page"] = query_params["p"]
 
+# ====================== FUNÇÃO CORRIGIDA DA IA ======================
 def enviar_mensagem_chat():
     query_usuario = st.session_state.get("campo_texto_input", "").strip()
-    if query_usuario:
-        st.session_state["chat_history"].append({"role": "user", "content": query_usuario})
-        sistema_ia = carregar_sistema_ia()
-        if sistema_ia is not None:
-            llm, retriever, p = sistema_ia
-            docs = retriever.invoke(query_usuario)
-            contexto_texto = "\n".join([doc.page_content for doc in docs])
-            historico_texto = "\n".join([f"{m['role']}: {m['content']}" for m in st.session_state["chat_history"][-5:]])
-            resposta = llm.invoke(p.format(context=contexto_texto, chat_history=historico_texto, input=query_usuario))
-            
-            imagens_geradas = []
-            for doc in docs:
-                caminho_pdf = doc.metadata.get("source", "")
-                num_pagina = doc.metadata.get("page", 0)
-                if caminho_pdf and os.path.exists(caminho_pdf):
-                    try:
-                        doc_fitz = fitz.open(caminho_pdf)
-                        pagina = doc_fitz.load_page(num_pagina)
-                        pix = pagina.get_pixmap(matrix=fitz.Matrix(2, 2))
-                        imagens_geradas.append((pix.tobytes("png"), f"📍 Reference: {os.path.basename(caminho_pdf)} (Page {num_pagina + 1})"))
-                        doc_fitz.close()
-                    except: pass
-            st.session_state["chat_history"].append({"role": "assistant", "content": resposta.content, "images": imagens_geradas})
+    if not query_usuario:
+        return
+    
+    st.session_state["chat_history"].append({"role": "user", "content": query_usuario})
+    
+    sistema_ia = carregar_sistema_ia()
+    if sistema_ia is None:
+        st.session_state["chat_history"].append({"role": "assistant", "content": "Erro: Sistema IA não carregado."})
+        return
+    
+    llm, retriever, prompt = sistema_ia
+    docs = retriever.invoke(query_usuario)
+    contexto_texto = "\n\n".join([doc.page_content for doc in docs])
+    
+    # Histórico no formato correto
+    chat_history = []
+    for msg in st.session_state["chat_history"][-6:]:
+        if msg["role"] == "user":
+            chat_history.append(("human", msg["content"]))
+        else:
+            chat_history.append(("ai", msg["content"]))
+    
+    try:
+        resposta = llm.invoke(prompt.format_messages(
+            context=contexto_texto,
+            chat_history=chat_history,
+            input=query_usuario
+        ))
+        
+        imagens_geradas = []
+        for doc in docs:
+            caminho_pdf = doc.metadata.get("source", "")
+            num_pagina = doc.metadata.get("page", 0)
+            if caminho_pdf and os.path.exists(caminho_pdf):
+                try:
+                    doc_fitz = fitz.open(caminho_pdf)
+                    pagina = doc_fitz.load_page(num_pagina)
+                    pix = pagina.get_pixmap(matrix=fitz.Matrix(2, 2))
+                    imagens_geradas.append((pix.tobytes("png"), f"📍 Reference: {os.path.basename(caminho_pdf)} (Page {num_pagina + 1})"))
+                    doc_fitz.close()
+                except: pass
+        st.session_state["chat_history"].append({"role": "assistant", "content": resposta.content, "images": imagens_geradas})
+    except Exception as e:
+        st.session_state["chat_history"].append({"role": "assistant", "content": f"Erro ao gerar resposta: {str(e)}"})
 
 # ==========================================
 # RENDERIZAÇÃO DOS ECRÃS MESTRE
@@ -157,8 +177,6 @@ if st.session_state["page"] == "home":
         with open("demo_video.mp4", "rb") as v_file:
             st.video(v_file.read(), format="video/mp4")
 
-
-        
     st.markdown("""<div class="main-btn-container"><a href="?p=pricing" target="_self" class="html-giant-btn">BUY INSTANT ACCESS — CHECK PRICING</a></div>""", unsafe_allow_html=True)
     st.markdown("""<div class="footer-contact-box"><a href="mailto:support@vtwintechai.com" class="footer-contact-link">📩 Need Help? Contact Us: support@vtwintechai.com</a></div>""", unsafe_allow_html=True)
 
@@ -219,11 +237,8 @@ elif st.session_state["page"] == "brain":
                 for img_bytes, ref_title in msg["images"]: st.markdown(f"**{ref_title}**"); st.image(img_bytes, use_container_width=True)
     st.markdown("---")
     
-        # FUNÇÃO DE CALLBACK PARA LIMPAR A CAIXA APÓS O ENTER
-    if "campo_texto_input" in st.session_state and st.session_state["campo_texto_input"].strip():
-        enviar_mensagem_chat()
-        st.session_state["campo_texto_input"] = ""
-        st.rerun()
-
-    # CAMPO DE TEXTO QUE ENVIA APENAS COM ENTER
     st.text_input("🔧 Write your message to the Mechanic:", key="campo_texto_input")
+    
+    if st.button("🚀 Send Message to Master Tech", use_container_width=True):
+        enviar_mensagem_chat()
+        st.rerun()
