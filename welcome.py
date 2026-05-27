@@ -144,14 +144,11 @@ if st.session_state["page"] == "home":
     
     col_v1, col_v2, col_v3 = st.columns([0.5, 2, 0.5])
     with col_v2:
-        st.markdown("""
-            <div class="video-container-html5">
-                <video controls preload="metadata">
-                    <source src="https://githubusercontent.com" type="video/mp4">
-                    Your browser does not support the video tag.
-                </video>
-            </div>
-            """, unsafe_allow_html=True)
+     if os.path.exists("demo_video.mp4"):
+        with open("demo_video.mp4", "rb") as v_file:
+            st.video(v_file.read(), format="video/mp4")
+
+
         
     st.markdown("""<div class="main-btn-container"><a href="?p=pricing" target="_self" class="html-giant-btn">BUY INSTANT ACCESS — CHECK PRICING</a></div>""", unsafe_allow_html=True)
     st.markdown("""<div class="footer-contact-box"><a href="mailto:support@vtwintechai.com" class="footer-contact-link">📩 Need Help? Contact Us: support@vtwintechai.com</a></div>""", unsafe_allow_html=True)
