@@ -212,7 +212,8 @@ elif st.session_state["page"] == "brain":
     st.markdown("---")
     
     st.text_input("🔧 Write your message to the Mechanic:", key="campo_texto_input")
-    if st.button("🚀 Send Message to Master Tech", use_container_width=True):
-        enviar_mensagem_chat()
-        st.rerun()
+if st.button("🚀 Send Message to Master Tech", use_container_width=True):
+    enviar_mensagem_chat()
+    st.rerun()
+
 
