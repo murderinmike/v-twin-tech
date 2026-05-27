@@ -160,11 +160,11 @@ elif st.session_state["page"] == "pricing":
     
     with col1: 
         st.markdown('<div class="pricing-card"><h3>💡 Monthly Pass</h3><h2>$19.99</h2><p>Full Access to all wiring diagrams, diagnostics and torque specifications. Up to date model coverage. Cancel anytime.</p></div>', unsafe_allow_html=True)
-        st.link_button("Subscribe Monthly", "https://buy.stripe.com/5kQcN4fLk6p8gvZapZdby00", use_container_width=True)
+        st.link_button("Subscribe Monthly", "https://stripe.com", use_container_width=True)
         
     with col2: 
         st.markdown('<div class="pricing-card" style="border:2px solid #FF6600;"><h3>⚡ Annual Pro</h3><h2>$199</h2><p>Save $40 with the annual membership. Continuous full workshop database unlock, structural step-by-step repair logs and priority tools.</p></div>', unsafe_allow_html=True)
-        st.link_button("Subscribe Annually", "https://buy.stripe.com/aFa9AS0Qq6p87Zt7dNdby01", use_container_width=True)
+        st.link_button("Subscribe Annually", "https://stripe.com", use_container_width=True)
 
 elif st.session_state["page"] == "login":
     if st.button("← Back to Home"):
