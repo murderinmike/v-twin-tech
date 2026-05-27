@@ -211,8 +211,8 @@ elif st.session_state["page"] == "brain":
                 for img_bytes, ref_title in msg["images"]: st.markdown(f"**{ref_title}**"); st.image(img_bytes, use_container_width=True)
     st.markdown("---")
     
-    with st.form("form_chat_limpo", clear_on_submit=True):
-        st.text_input("🔧 Write your message to the Mechanic:", key="campo_texto_input")
-        if st.form_submit_button("Send Message"):
-            enviar_mensagem_chat()
-            st.rerun()
+    st.text_input("🔧 Write your message to the Mechanic:", key="campo_texto_input")
+    if st.button("🚀 Send Message to Master Tech", use_container_width=True):
+        enviar_mensagem_chat()
+        st.rerun()
+
