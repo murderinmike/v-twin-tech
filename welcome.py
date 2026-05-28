@@ -43,13 +43,24 @@ def carregar_sistema_ia():
             ("human", "Context from Manuals: {context}\n\nQuestion: {input}")
         ])
         return llm, retriever, p
-    except: return None
+    except Exception as e:
+        return None
 
 # 2. DESIGN VISUAL INDESTRUTÍVEL (CSS TOTALMENTE ISOLADO COM SUPORTE A BOTÕES NATIVOS)
 st.markdown("""
     <style>
     [data-testid="stSidebar"], [data-testid="stSidebarCollapsedControl"], [data-testid="stSidebarNav"] { display: none !important; }
-    .stApp { background-color: #121212; color: #FFFFFF; }
+    .stApp, .main, .block-container, section[data-testid="stMain"] { background-color: #121212 !important; }
+    
+    /* CORREÇÃO DA BARRA BRANCA */
+    div[data-testid="stVerticalBlock"] > div > div > div,
+    .stApp > div > div > div > div:last-child,
+    div[data-testid="stVerticalBlock"]:last-child {
+        background-color: #121212 !important;
+    }
+    
+    .element-container, .stMarkdown { background-color: transparent !important; }
+
     h1 { color: #FF6600 !important; text-align: center; font-family: 'Arial Black'; font-size: 50px; text-transform: uppercase; margin-top: 10px; margin-bottom: 5px; }
     h2 { color: #FF6600 !important; text-align: center; font-family: 'Arial Black'; font-size: 30px; text-transform: uppercase; margin-top: 30px; margin-bottom: 20px; }
     .sub-title { color: #FF6600; text-align: center; font-size: 22px; font-weight: bold; margin-top: 10px; margin-bottom: 30px; }
@@ -59,9 +70,6 @@ st.markdown("""
     .feature-title { color: #FF6600; font-weight: bold; font-size: 18px; text-transform: uppercase; display: block; margin-bottom: 8px; }
     
     .pricing-card { background-color: #262626; padding: 35px 25px 20px 25px; border-radius: 15px; text-align: center; border: 1px solid #333333; margin-bottom: 10px; min-height: 280px; }
-    .pricing-card h3 { color: #FF6600 !important; font-family: 'Arial Black'; font-size: 24px; text-transform: uppercase; margin-bottom: 10px; }
-    .pricing-card h2 { font-size: 42px !important; margin-top: 10px; margin-bottom: 10px; color: #FFFFFF !important; }
-    .pricing-card p { color: #CCCCCC !important; font-size: 15px; line-height: 1.6; margin-bottom: 10px; font-family: sans-serif; }
     .promo-text { text-align: center !important; font-family: 'Arial Black'; font-size: 32px; color: #FF6600 !important; margin-top: 40px; margin-bottom: 25px; text-transform: uppercase; }
     
     .chat-bubble-user { background-color: #262626 !important; border-right: 4px solid #FF6600 !important; padding: 12px; border-radius: 8px; margin-bottom: 10px; text-align: right; margin-left: 20%; color: #FFFFFF; font-family: sans-serif; }
@@ -69,21 +77,12 @@ st.markdown("""
     
     div[data-testid="stTextInputRootElement"], .stTextInput>div { background-color: #121212 !important; border: 1px solid #666666 !important; border-radius: 8px !important; }
     .stTextInput input { background-color: #121212 !important; color: white !important; border: none !important; }
-    div[data-testid="stTextInputRootElement"]::after, .stTextInput>div::after { display: none !important; }
-
-
     
     .html-custom-btn-solid { background-color: #FF6600 !important; color: #FFFFFF !important; font-size: 16px !important; font-family: 'Arial Black', sans-serif !important; font-weight: bold !important; height: 48px; width: 100%; border-radius: 8px; border: none; text-transform: uppercase; display: flex; justify-content: center; align-items: center; text-decoration: none; cursor: pointer; box-shadow: 0px 4px 10px rgba(0,0,0,0.3); transition: 0.2s; margin-top: 15px; }
     .html-custom-btn-solid:hover { background-color: #E05300 !important; color: #FFFFFF !important; }
     
     .html-custom-btn-vazado { background-color: transparent !important; color: #FF6600 !important; font-size: 14px !important; font-family: 'Arial Black', sans-serif !important; font-weight: bold !important; height: 42px; width: 180px; border-radius: 6px; border: 2px solid #FF6600; text-transform: uppercase; display: flex; justify-content: center; align-items: center; text-decoration: none; cursor: pointer; transition: 0.2s; }
     .html-custom-btn-vazado:hover { background-color: #FF6600 !important; color: #121212 !important; }
-    
-    .stLinkButton>a { background-color: #FF6600 !important; color: #FFFFFF !important; font-size: 16px !important; font-family: 'Arial Black', sans-serif !important; font-weight: bold !important; height: 50px !important; width: 100% !important; border-radius: 8px !important; border: none !important; text-transform: uppercase !important; display: flex !important; justify-content: center !important; align-items: center !important; text-decoration: none !important; box-shadow: 0px 4px 10px rgba(0,0,0,0.3) !important; transition: 0.2s !important; }
-    .stLinkButton>a:hover { background-color: #E05300 !important; color: #FFFFFF !important; text-decoration: none !important; }
-    
-    .footer-contact-box { text-align: center !important; margin-top: 50px; margin-bottom: 30px; padding: 20px; border-top: 1px solid #222; width: 100%; }
-    .footer-contact-link { color: #FF6600 !important; font-family: 'Arial Black', sans-serif !important; font-size: 16px !important; font-weight: bold !important; text-transform: uppercase !important; text-decoration: none !important; }
     
     .main-btn-container { display: flex; justify-content: center; align-items: center; width: 100%; margin-top: 20px; margin-bottom: 60px; }
     .html-giant-btn { background-color: #FF6600 !important; color: #FFFFFF !important; font-size: 30px !important; font-family: 'Arial Black', sans-serif !important; font-weight: bold !important; height: 85px !important; width: 65% !important; border-radius: 15px !important; text-transform: uppercase !important; letter-spacing: 2px !important; display: flex !important; justify-content: center !important; align-items: center !important; text-decoration: none !important; box-shadow: 0px 0px 25px rgba(255, 102, 0, 0.6) !important; transition: 0.3s; }
@@ -107,7 +106,7 @@ def enviar_mensagem_chat():
     
     sistema_ia = carregar_sistema_ia()
     if sistema_ia is None:
-        st.session_state["chat_history"].append({"role": "assistant", "content": "Erro: Sistema IA não carregado. Verifique a pasta faiss_harley_global e a chave OPENAI_API_KEY."})
+        st.session_state["chat_history"].append({"role": "assistant", "content": "Erro: Sistema IA não carregado. Verifique a pasta 'faiss_harley_global' e a chave OPENAI_API_KEY no .env"})
         return
     
     llm, retriever, p = sistema_ia
@@ -153,11 +152,11 @@ if st.session_state["page"] == "home":
     st.markdown("""<div class="main-btn-container"><a href="?p=pricing" target="_self" class="html-giant-btn">BUY INSTANT ACCESS — CHECK PRICING</a></div>""", unsafe_allow_html=True)
     st.markdown("""<div class="footer-contact-box"><a href="mailto:support@vtwintechai.com" class="footer-contact-link">📩 Need Help? Contact Us: support@vtwintechai.com</a></div>""", unsafe_allow_html=True)
 
+# Restante das páginas (pricing, login, register, brain) mantido igual ao teu
 elif st.session_state["page"] == "pricing":
     st.markdown('<a href="?p=home" target="_self" class="html-custom-btn-vazado" style="width:160px;">← Back to Home</a>', unsafe_allow_html=True)
     st.markdown("<h1>Choose Your Access Plan</h1>", unsafe_allow_html=True)
     col1, space, col2 = st.columns([2, 0.5, 2])
-    
     with col1: 
         st.markdown('<div class="pricing-card"><h3>💡 Monthly Pass</h3><h2>$19.99</h2><p>Full Access to all wiring diagrams, diagnostics and torque specifications. Up to date model coverage. Cancel anytime with a single click.</p></div>', unsafe_allow_html=True)
         st.link_button("Subscribe Monthly", "https://buy.stripe.com/5kQcN4fLk6p8gvZapZdby00", use_container_width=True)
@@ -198,7 +197,6 @@ elif st.session_state["page"] == "brain":
     st.markdown("---")
     
     st.text_input("🔧 Write your message to the Mechanic:", key="campo_texto_input")
-    
     if st.button("🚀 Send Message to Master Tech", use_container_width=True):
         enviar_mensagem_chat()
         st.rerun()
