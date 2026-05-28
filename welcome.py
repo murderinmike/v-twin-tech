@@ -10,6 +10,9 @@ from dotenv import load_dotenv
 
 # COFRE DE SEGURANÇA ATIVO (.env)
 load_dotenv()
+# SE ESTIVER NA NUVEM, FORÇA A LEITURA DOS SECRETS DO STREAMLIT
+if "OPENAI_API_KEY" in st.secrets:
+    os.environ["OPENAI_API_KEY"] = st.secrets["OPENAI_API_KEY"]
 
 # 1. SETUP DA PÁGINA MESTRE
 st.set_page_config(page_title="V-Twin Tech Intelligence", page_icon="💀", layout="wide")
