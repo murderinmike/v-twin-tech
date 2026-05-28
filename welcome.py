@@ -33,8 +33,14 @@ logo_base64 = obter_imagem_base64("logo.jpg")
 def carregar_sistema_ia():
     try:
         embeddings = OpenAIEmbeddings(model="text-embedding-3-small")
-        db = FAISS.load_local("faiss_harley_global", embeddings, allow_dangerous_deserialization=True)
-        retriever = db.as_retriever(search_kwargs={"k": 3})
+        if os.path.exists("faiss_harley_global/index.faiss"):
+            db = FAISS.load_local("faiss_harley_global", embeddings, allow_dangerous_deserialization=True)
+            retriever = db.as_retriever(search_kwargs={"k": 2})
+        else:
+            return None
+
+
+       
         llm = ChatOpenAI(model="gpt-4o-mini", temperature=0.2)
         
         p = ChatPromptTemplate.from_messages([
@@ -108,8 +114,9 @@ def enviar_mensagem_chat():
             docs = retriever.invoke(query_usuario)
             contexto_texto = "\n".join([doc.page_content for doc in docs])
             historico_texto = "\n".join([f"{m['role']}: {m['content']}" for m in st.session_state["chat_history"][-5:]])
-            resposta = llm.invoke(p.format(context=contexto_texto, chat_history=historico_texto, input=query_usuario))
-            
+            prompt_formatado = p.invoke({"context": contexto_texto, "chat_history": st.session_state["chat_history"][-5:], "input": query_usuario})
+            resposta = llm.invoke(prompt_formatado)
+
             imagens_geradas = []
             for doc in docs:
                 caminho_pdf = doc.metadata.get("source", "")
