@@ -104,9 +104,9 @@ st.markdown("""
 query_params = st.query_params
 if "p" in query_params: st.session_state["page"] = query_params["p"]
 
-def enviar_mensagem_chat():
-    query_usuario = st.session_state.get("campo_texto_input", "").strip()
-    if query_usuario:
+def enviar_mensagem_chat(query_usuario):
+    if query_usuario.strip():
+
         st.session_state["chat_history"].append({"role": "user", "content": query_usuario})
         sistema_ia = carregar_sistema_ia()
         if sistema_ia is not None:
@@ -220,7 +220,8 @@ elif st.session_state["page"] == "brain":
     
         # FUNÇÃO DE CALLBACK PARA LIMPAR A CAIXA APÓS O ENTER
     if "campo_texto_input" in st.session_state and st.session_state["campo_texto_input"].strip():
-        enviar_mensagem_chat()
+        enviar_mensagem_chat(st.session_state["campo_texto_input"])
+
         st.session_state["campo_texto_input"] = ""
         st.rerun()
 
