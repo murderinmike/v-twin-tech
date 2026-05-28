@@ -40,7 +40,7 @@ def carregar_sistema_ia():
             db = FAISS.load_local("faiss_harley_global", embeddings, allow_dangerous_deserialization=True)
             retriever = db.as_retriever(search_kwargs={"k": 2})
         else:
-            return None
+            
 
 
        
