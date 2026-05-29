@@ -10,8 +10,7 @@ from dotenv import load_dotenv
 
 # COFRE DE SEGURANÇA ATIVO (.env)
 load_dotenv()
-
-# SE ESTIVER NA NUVEM, FORÇA A LEITURA DOS SECRETS
+# SE ESTIVER NA NUVEM, FORÇA A LEITURA DOS SECRETS DO STREAMLIT
 if "OPENAI_API_KEY" in st.secrets:
     os.environ["OPENAI_API_KEY"] = st.secrets["OPENAI_API_KEY"]
 
@@ -37,8 +36,15 @@ logo_base64 = obter_imagem_base64("logo.jpg")
 def carregar_sistema_ia():
     try:
         embeddings = OpenAIEmbeddings(model="text-embedding-3-small")
-        db = FAISS.load_local("faiss_harley_global", embeddings, allow_dangerous_deserialization=True)
-        retriever = db.as_retriever(search_kwargs={"k": 3})
+        if os.path.exists("faiss_harley_global/index.faiss"):
+            db = FAISS.load_local("faiss_harley_global", embeddings, allow_dangerous_deserialization=True)
+            retriever = db.as_retriever(search_kwargs={"k": 2})
+        else:
+            return None
+ 
+
+
+       
         llm = ChatOpenAI(model="gpt-4o-mini", temperature=0.2)
         
         p = ChatPromptTemplate.from_messages([
@@ -47,11 +53,9 @@ def carregar_sistema_ia():
             ("human", "Context from Manuals: {context}\n\nQuestion: {input}")
         ])
         return llm, retriever, p
-    except Exception as e:
-        st.error(f"Erro ao carregar IA: {str(e)}")
-        return None
+    except: return None
 
-# 2. DESIGN VISUAL (CSS mantido igual ao teu)
+# 2. DESIGN VISUAL INDESTRUTÍVEL (CSS TOTALMENTE ISOLADO COM SUPORTE A BOTÕES NATIVOS)
 st.markdown("""
     <style>
     [data-testid="stSidebar"], [data-testid="stSidebarCollapsedControl"], [data-testid="stSidebarNav"] { display: none !important; }
@@ -75,50 +79,66 @@ st.markdown("""
     
     div[data-testid="stTextInputRootElement"], .stTextInput>div { background-color: #121212 !important; border: 1px solid #666666 !important; border-radius: 8px !important; }
     .stTextInput input { background-color: #121212 !important; color: white !important; border: none !important; }
+    div[data-testid="stTextInputRootElement"]::after, .stTextInput>div::after { display: none !important; }
+
+
+    
+    .html-custom-btn-solid { background-color: #FF6600 !important; color: #FFFFFF !important; font-size: 16px !important; font-family: 'Arial Black', sans-serif !important; font-weight: bold !important; height: 48px; width: 100%; border-radius: 8px; border: none; text-transform: uppercase; display: flex; justify-content: center; align-items: center; text-decoration: none; cursor: pointer; box-shadow: 0px 4px 10px rgba(0,0,0,0.3); transition: 0.2s; margin-top: 15px; }
+    .html-custom-btn-solid:hover { background-color: #E05300 !important; color: #FFFFFF !important; }
+    
+    .html-custom-btn-vazado { background-color: transparent !important; color: #FF6600 !important; font-size: 14px !important; font-family: 'Arial Black', sans-serif !important; font-weight: bold !important; height: 42px; width: 180px; border-radius: 6px; border: 2px solid #FF6600; text-transform: uppercase; display: flex; justify-content: center; align-items: center; text-decoration: none; cursor: pointer; transition: 0.2s; }
+    .html-custom-btn-vazado:hover { background-color: #FF6600 !important; color: #121212 !important; }
+    
+    .stLinkButton>a { background-color: #FF6600 !important; color: #FFFFFF !important; font-size: 16px !important; font-family: 'Arial Black', sans-serif !important; font-weight: bold !important; height: 50px !important; width: 100% !important; border-radius: 8px !important; border: none !important; text-transform: uppercase !important; display: flex !important; justify-content: center !important; align-items: center !important; text-decoration: none !important; box-shadow: 0px 4px 10px rgba(0,0,0,0.3) !important; transition: 0.2s !important; }
+    .stLinkButton>a:hover { background-color: #E05300 !important; color: #FFFFFF !important; text-decoration: none !important; }
+    
+    .footer-contact-box { text-align: center !important; margin-top: 50px; margin-bottom: 30px; padding: 20px; border-top: 1px solid #222; width: 100%; }
+    .footer-contact-link { color: #FF6600 !important; font-family: 'Arial Black', sans-serif !important; font-size: 16px !important; font-weight: bold !important; text-transform: uppercase !important; text-decoration: none !important; }
+    
+    .main-btn-container { display: flex; justify-content: center; align-items: center; width: 100%; margin-top: 20px; margin-bottom: 60px; }
+    .html-giant-btn { background-color: #FF6600 !important; color: #FFFFFF !important; font-size: 30px !important; font-family: 'Arial Black', sans-serif !important; font-weight: bold !important; height: 85px !important; width: 65% !important; border-radius: 15px !important; text-transform: uppercase !important; letter-spacing: 2px !important; display: flex !important; justify-content: center !important; align-items: center !important; text-decoration: none !important; box-shadow: 0px 0px 25px rgba(255, 102, 0, 0.6) !important; transition: 0.3s; }
+    .html-giant-btn:hover { background-color: #E05300 !important; color: #FFFFFF !important; }
+    .html-home-motor { display: flex; justify-content: center; align-items: center; width: 100%; margin-top: 15px; margin-bottom: 15px; }
+    .html-home-motor img { width: 340px !important; height: auto !important; border-radius: 12px; border: none !important; }
+    .html-brain-motor { display: flex; justify-content: center; align-items: center; width: 100%; margin-top: 10px; margin-bottom: 15px; }
+    .html-brain-motor img { width: 260px !important; height: auto !important; border-radius: 6px; border: none !important; }
     </style>
     """, unsafe_allow_html=True)
 
 query_params = st.query_params
 if "p" in query_params: st.session_state["page"] = query_params["p"]
 
-# ====================== FUNÇÃO DA IA ======================
 def enviar_mensagem_chat(query_usuario):
-    if not query_usuario.strip():
-        return None
-    
-    st.session_state["chat_history"].append({"role": "user", "content": query_usuario})
-    
-    sistema_ia = carregar_sistema_ia()
-    if sistema_ia is None:
-        return "Erro: Sistema IA não carregado. Verifique a pasta faiss_harley_global e a chave OPENAI_API_KEY."
-    
-    llm, retriever, p = sistema_ia
-    docs = retriever.invoke(query_usuario)
-    contexto_texto = "\n".join([doc.page_content for doc in docs])
-    
-    chat_history = []
-    for msg in st.session_state["chat_history"][-6:]:
-        if msg["role"] == "user":
-            chat_history.append(("human", msg["content"]))
-        else:
-            chat_history.append(("ai", msg["content"]))
-    
-    try:
-        resposta = llm.invoke(p.format_messages(
-            context=contexto_texto,
-            chat_history=chat_history,
-            input=query_usuario
-        ))
-        st.session_state["chat_history"].append({"role": "assistant", "content": resposta.content})
-        return resposta.content
-    except Exception as e:
-        return f"Erro ao gerar resposta: {str(e)}"
+    if query_usuario.strip():
+
+        st.session_state["chat_history"].append({"role": "user", "content": query_usuario})
+        sistema_ia = carregar_sistema_ia()
+        if sistema_ia is not None:
+            llm, retriever, p = sistema_ia
+            docs = retriever.invoke(query_usuario)
+            contexto_texto = "\n".join([doc.page_content for doc in docs])
+            historico_texto = "\n".join([f"{m['role']}: {m['content']}" for m in st.session_state["chat_history"][-5:]])
+            prompt_formatado = p.invoke({"context": contexto_texto, "chat_history": st.session_state["chat_history"][-5:], "input": query_usuario})
+            resposta = llm.invoke(prompt_formatado)
+
+            imagens_geradas = []
+            for doc in docs:
+                caminho_pdf = doc.metadata.get("source", "")
+                num_pagina = doc.metadata.get("page", 0)
+                if caminho_pdf and os.path.exists(caminho_pdf):
+                    try:
+                        doc_fitz = fitz.open(caminho_pdf)
+                        pagina = doc_fitz.load_page(num_pagina)
+                        pix = pagina.get_pixmap(matrix=fitz.Matrix(2, 2))
+                        imagens_geradas.append((pix.tobytes("png"), f"📍 Reference: {os.path.basename(caminho_pdf)} (Page {num_pagina + 1})"))
+                        doc_fitz.close()
+                    except: pass
+            st.session_state["chat_history"].append({"role": "assistant", "content": resposta.content, "images": imagens_geradas})
 
 # ==========================================
 # RENDERIZAÇÃO DOS ECRÃS MESTRE
 # ==========================================
 if st.session_state["page"] == "home":
-    # ... teu código do home (mantido igual) ...
     c_top1, c_top2, c_top3 = st.columns([2, 1, 0.6])
     with c_top3: st.markdown('<a href="?p=login" target="_self" class="html-custom-btn-vazado">👤 Member Log In</a>', unsafe_allow_html=True)
     st.markdown("<h1>V-Twin Tech Intelligence</h1>", unsafe_allow_html=True)
@@ -140,10 +160,49 @@ if st.session_state["page"] == "home":
         with open("demo_video.mp4", "rb") as v_file:
             st.video(v_file.read(), format="video/mp4")
 
+
+        
     st.markdown("""<div class="main-btn-container"><a href="?p=pricing" target="_self" class="html-giant-btn">BUY INSTANT ACCESS — CHECK PRICING</a></div>""", unsafe_allow_html=True)
     st.markdown("""<div class="footer-contact-box"><a href="mailto:support@vtwintechai.com" class="footer-contact-link">📩 Need Help? Contact Us: support@vtwintechai.com</a></div>""", unsafe_allow_html=True)
 
-# ... (pricing, login, register mantidos) ...
+elif st.session_state["page"] == "pricing":
+    st.markdown('<a href="?p=home" target="_self" class="html-custom-btn-vazado" style="width:160px;">← Back to Home</a>', unsafe_allow_html=True)
+    st.markdown("<h1>Choose Your Access Plan</h1>", unsafe_allow_html=True)
+    col1, space, col2 = st.columns([2, 0.5, 2])
+    
+    with col1: 
+        st.markdown('<div class="pricing-card"><h3>💡 Monthly Pass</h3><h2>$19.99</h2><p>Full Access to all wiring diagrams, diagnostics and torque specifications. Up to date model coverage. Cancel anytime with a single click.</p></div>', unsafe_allow_html=True)
+        st.link_button("Subscribe Monthly", "https://buy.stripe.com/5kQcN4fLk6p8gvZapZdby00", use_container_width=True)
+    with col2: 
+        st.markdown('<div class="pricing-card" style="border:2px solid #FF6600;"><h3>⚡ Annual Pro</h3><h2>$199</h2><p>Save $40 with the annual membership. Continuous full workshop database unlock, structural step-by-step repair logs and master tech priority helper tools.</p></div>', unsafe_allow_html=True)
+        st.link_button("Subscribe Annually", "https://buy.stripe.com/aFa9AS0Qq6p87Zt7dNdby01", use_container_width=True)
+
+elif st.session_state["page"] == "login":
+    st.markdown('<a href="?p=home" target="_self" class="html-custom-btn-vazado" style="width:160px;">← Back to Home</a>', unsafe_allow_html=True)
+    st.markdown("<h1>Secure Member Portal</h1>", unsafe_allow_html=True)
+    cl1, cl2, cl3 = st.columns([1, 1.5, 1])
+    with cl2:
+        u_email = st.text_input("Email Address", key="login_usr")
+        u_pass = st.text_input("Password", type="password", key="login_pwd")
+        st.markdown("<br>", unsafe_allow_html=True)
+        if u_email and u_pass:
+            if u_email in st.session_state["users_db"] and st.session_state["users_db"][u_email] == u_pass:
+                st.markdown('<a href="?p=brain" target="_self" class="html-custom-btn-solid">ACCESS DASHBOARD (CONFIRMED)</a>', unsafe_allow_html=True)
+            else: st.markdown('<div class="html-custom-btn-solid" style="background-color:#444!important; cursor:not-allowed;">Enter Valid Credentials</div>', unsafe_allow_html=True)
+        else: st.markdown('<a href="?p=brain" target="_self" class="html-custom-btn-solid">ACCESS DASHBOARD</a>', unsafe_allow_html=True)
+
+elif st.session_state["page"] == "register":
+    st.markdown('<a href="?p=home" target="_self" class="html-custom-btn-vazado" style="width:160px;">← Back to Home</a>', unsafe_allow_html=True)
+    st.markdown("<h1>💳 Setup Your Premium Account</h1>", unsafe_allow_html=True)
+    cl1, cl2, cl3 = st.columns([1, 1.5, 1])
+    with cl2:
+        n_email = st.text_input("Enter Your Account Email", key="reg_usr")
+        n_pass = st.text_input("Create Secret Password", type="password", key="reg_pwd")
+        st.markdown("<br>", unsafe_allow_html=True)
+        if n_email and n_pass:
+            st.session_state["users_db"][n_email] = n_pass
+            st.markdown('<a href="?p=login" target="_self" class="html-custom-btn-solid">ACTIVATE PREMIUM ACCESS (CONFIRMED)</a>', unsafe_allow_html=True)
+        else: st.markdown('<a href="?p=login" target="_self" class="html-custom-btn-solid">ACTIVATE PREMIUM ACCESS</a>', unsafe_allow_html=True)
 
 elif st.session_state["page"] == "brain":
     c_b1, c_b2, c_b3 = st.columns([2, 1, 0.6])
@@ -163,14 +222,18 @@ elif st.session_state["page"] == "brain":
                 for img_bytes, ref_title in msg["images"]: st.markdown(f"**{ref_title}**"); st.image(img_bytes, use_container_width=True)
     st.markdown("---")
     
+        # FUNÇÃO DE CALLBACK PARA LIMPAR A CAIXA APÓS O ENTER
+    # O CABO MODERNO E DIRETO DO CHAT (SEM RERUN)
     if query_usuario := st.chat_input("Write your message to the Mechanic..."):
+        # 1. Cola o que tu escreveste na bolinha do utilizador
         with st.chat_message("user"):
             st.markdown(query_usuario)
         
+        # 2. Ativa o motor da IA sem piscar o ecrã
         with st.chat_message("assistant"):
-            with st.spinner("A consultar os manuais..."):
+            with st.spinner("A consultar os manuais da Harley..."):
                 resposta = enviar_mensagem_chat(query_usuario)
                 if resposta:
                     st.markdown(resposta)
                 else:
-                    st.error("Não foi possível obter resposta.")
+                    st.error("O sinal falhou. Verifica a ligação ou as chaves.")
