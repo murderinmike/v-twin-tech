@@ -223,20 +223,20 @@ elif st.session_state["page"] == "brain":
     st.markdown("---")
     
         # FUNÇÃO DE CALLBACK PARA LIMPAR A CAIXA APÓS O ENTER
-   # O CABO MODERNO E DIRETO DO CHAT (SEM RERUN)
-if query_usuario := st.chat_input("Write your message to the Mechanic..."):
-    # 1. Cola o que tu escreveste na bolinha do utilizador
-    with st.chat_message("user"):
-        st.markdown(query_usuario)
-    
-    # 2. Ativa o motor da IA sem piscar o ecrã
-    with st.chat_message("assistant"):
-        with st.spinner("A consultar os manuais da Harley..."):
-            resposta = enviar_mensagem_chat(query_usuario)
-            if resposta:
-                st.markdown(resposta)
-            else:
-                st.error("O sinal falhou. Verifica a ligação ou as chaves.")
+    # O CABO MODERNO E DIRETO DO CHAT (SEM RERUN)
+    if query_usuario := st.chat_input("Write your message to the Mechanic..."):
+        # 1. Cola o que tu escreveste na bolinha do utilizador
+        with st.chat_message("user"):
+            st.markdown(query_usuario)
+        
+        # 2. Ativa o motor da IA sem piscar o ecrã
+        with st.chat_message("assistant"):
+            with st.spinner("A consultar os manuais da Harley..."):
+                resposta = enviar_mensagem_chat(query_usuario)
+                if resposta:
+                    st.markdown(resposta)
+                else:
+                    st.error("O sinal falhou. Verifica a ligação ou as chaves.")
 
 
 
